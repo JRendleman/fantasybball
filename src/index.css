@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+
+body {
+    margin: 0;
+    background-color: #F5F6F7;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#teamLogo {
+    display: inline;
+    width: 50px;
+    height: 30px;
+}
+
+#headerBar {
+    height: 20px;
+    background-color: #346AC0;
+    padding: 10px;
+}
+
+#headerBar h2{
+    display: inline;
+    color: white;
+    padding-right: 20px;
+    vertical-align: middle;
+    font-size: 20px;
+}
+
+#metrixMaker {
+    width: 97%;
+    margin-left: 1.5%;
+}
+
+#createNewReport {
+    height: 30px;
+    background-color: #346AC0;
+    color: white;
+    display: block;
+    font-weight: bold;
+    border-radius: 2px;
+    border: none;
+    margin-top: 10px;
+}
+
+#metrixLeft {
+    margin-top: 10px;
+    float: left;
+    width: 48%;
+    display: inline-block;
+    border: 0.5px gray solid;
+    border-radius: 5px;
+}
+
+#metrixRight {
+    margin-top: 10px;
+    float: right;
+    width: 48%;
+    display:inline-block;
+/*    border: 0.5px gray solid;*/
+    border-radius: 5px;
+}
+
+#metrixLeft #divider {
+    width: 100%;
+    height: 20px;
+    background-color: lightgray;
+    border-bottom: 0.5px gray solid;
+    border-top: 0.5px gray solid;
+    color: darkslategray;
+}
+
+#statTitle {
+    font-weight: bold;
+    height: 20px;
+}
+
+#statTitle span, #metrixLeft #divider span {
+    padding: 0px;
+    margin-left: 5px;
+    font-size: 14px;
+}
+
+#metrixLeft #divider span {
+    font-size: 10px;
+}
+
+#statOptions table{
+    width: 90%;
+    margin-left: 5%;
+    color: darkslategray;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#graphs {
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 30px;
+}
+
+#graphs img {
+    height: 70px;
+    width: 70px;
+    margin-right: 30px;
+}
+
+#graphDescription {
+    width: 90%;
+    margin-left: 5%;
+    color: darkslategray;
+}
+
+#filters {
+    width: 90%;
+    margin-top: 20px;
+    margin-left: 5%;
+}
+
+.filterButtons {
+    width: 30%;
+    height: 40px;
+    font-size: 11px;
+    margin-right: 13px;
+    font-weight: bold;
+    color: #346AC0;
+    border-radius: 3px;
+    border: 1px solid #346AC0;
+}
+
+#addFilter {
+    width: 30%;
+    height: 40px;
+    font-size: 11px;
+    font-weight: bold;
+    background-color: #346AC0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color:white;
+    border-radius: 3px;
+    border: 1px solid #346AC0;
+}
+
+#statsTable {
+    width: 100%;
+    font-size: 16px;
+    text-align: center;
+
+    border: 1px solid lightgray;
+    border-radius: 5px;
+
+}
+
+#statsTable thead tr {
+    height: 20px;
+    background-color: lightgray;
+}
+
+#statsTable tr {
+    height: 30px;
+    border-bottom: 0.1px solid gray;
+}
+
+#statsTable td:nth-child(1) {
+    color: #346AC0;
+    font-weight: bold;
+}
+
+#statsTable tr:nth-child(even) {
+    background-color: lightgray;
+}
+
+#graphPlaceholder {
+    width: 100%;
+    margin-top: 30px;
+}
