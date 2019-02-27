@@ -21,16 +21,16 @@ function StatsTable() {
     for (var i = 0; i < 9; i++) {
         var newPlayer = new player();
         newPlayer.name = names[i];
-        newPlayer.rating = 92.4;
-        newPlayer.rebounds = 2.4;
-        newPlayer.points = 28.6;
-        newPlayer.assists = 10.2;
-        newPlayer.steals = 2.1;
-        newPlayer.blocks = 0.2;
+        newPlayer.rating = Math.floor((Math.random() * 10) + 80);
+        newPlayer.rebounds = Math.floor((Math.random() * 11) + 1);
+        newPlayer.points = Math.floor((Math.random() * 15) + 20);
+        newPlayer.assists = Math.floor((Math.random() * 10) + 2);
+        newPlayer.steals = Math.floor((Math.random() * 3) + 0);
+        newPlayer.blocks = Math.floor((Math.random() * 2) + 1);
         newPlayer.fieldGoalPercentage = .486;
         newPlayer.threePointPercentage = .446;
         newPlayer.freeThrowPercentage = 86.6
-        newPlayer.turnovers = 4.2
+        newPlayer.turnovers = Math.floor((Math.random() * 4) + 0)
         array.push(newPlayer);
     };
     
@@ -51,7 +51,7 @@ function StatsTable() {
     );
     
     return (
-        <div>
+        <div id="statTableContainer">
             <table id="statsTable">
                 <thead>
                     <tr>
