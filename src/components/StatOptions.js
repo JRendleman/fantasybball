@@ -7,7 +7,6 @@ export default class StatOptions extends React.Component {
         super(props);
         
         this.stats = [];
-        
         this.handleClick = this.handleClick.bind(this);
     }
     
@@ -23,6 +22,8 @@ export default class StatOptions extends React.Component {
             this.stats.push(value);
             this.forceUpdate();
         }
+        
+        this.props.statOptionsCallback(this.stats);
     }
     
     render() {
