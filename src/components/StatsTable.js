@@ -1,78 +1,87 @@
 import React from "react"
+import ReactTable from "react-table";
+import "react-table/react-table.css"
 
-var names = ["James Harden", "Russel Westbrook", "Anthony Davis", "James Harden", "LeBron James", "Victor Oladipo", "Paul George", "Ben Simmons", "John Wall"]
-                      
-function player() {
-    this.name = "";
-    this.rating = 0;
-    this.points = 0;
-    this.rebounds = 0;
-    this.assists = 0;
-    this.steals = 0;
-    this.blocks = 0;
-    this.fieldGoalPercentage = 0;
-    this.threePointPercentage = 0;
-    this.freeThrowPercentage = 0;
-    this.turnovers = 0;
+
+var names = ["James Harden", "Russel Westbrook", "Anthony Davis", "LeBron James", "Victor Oladipo", "Paul George", "Ben Simmons", "John Wall"]
+var players = [];
+
+function addPlayerData() {
+    for (var i = 0; i < 8; i++) {
+        players.push({
+            player: names[i],
+            rating: Math.floor((Math.random() * 10) + 80),
+            rebounds: Math.floor((Math.random() * 11) + 1),
+            points: Math.floor((Math.random() * 15) + 20),
+            assists: Math.floor((Math.random() * 10) + 2),
+            steals: Math.floor((Math.random() * 3) + 0),
+            blocks: Math.floor((Math.random() * 2) + 1),
+            fieldgoal: .486,
+            threepoint: .446,
+            freethrow: 86.6,
+            turnovers: Math.floor((Math.random() * 4) + 0)
+            
+        })
+    };
 }
 
-function StatsTable() {
-    var array = []
-    for (var i = 0; i < 9; i++) {
-        var newPlayer = new player();
-        newPlayer.name = names[i];
-        newPlayer.rating = Math.floor((Math.random() * 10) + 80);
-        newPlayer.rebounds = Math.floor((Math.random() * 11) + 1);
-        newPlayer.points = Math.floor((Math.random() * 15) + 20);
-        newPlayer.assists = Math.floor((Math.random() * 10) + 2);
-        newPlayer.steals = Math.floor((Math.random() * 3) + 0);
-        newPlayer.blocks = Math.floor((Math.random() * 2) + 1);
-        newPlayer.fieldGoalPercentage = .486;
-        newPlayer.threePointPercentage = .446;
-        newPlayer.freeThrowPercentage = 86.6
-        newPlayer.turnovers = Math.floor((Math.random() * 4) + 0)
-        array.push(newPlayer);
-    };
-    
-    const listItems = array.map(player =>
+addPlayerData();
+
+class StatsTable extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        const columns = [
+            {
+                Header: "PLAYER",
+                accessor: "player"
+            },
+            {
+                Header: "RTG",
+                accessor: "rating"
+            },
+            {
+                Header: "PPG",
+                accessor: "points"
+            },
+            {
+                Header: "REB",
+                accessor: "rebounds"
+            },
+            {
+                Header: "STL",
+                accessor: "steals"
+            },
+            {
+                Header: "BLK",
+                accessor: "blocks"
+            },
+            {
+                Header: "FG%",
+                accessor: "fieldgoal"
+            },
+            {
+                Header: "3PT%",
+                accessor: "threepoint"
+            },
+            {
+                Header: "FT%",
+                accessor: "freethrow"
+            },
+            {
+                Header: "TO",
+                accessor: "turnovers"
+            }
+        ]
         
-        <tr key={player.name}>
-            <td>{player.name}</td>
-            <td>{player.rating}</td>
-            <td>{player.points}</td>
-            <td>{player.rebounds}</td>
-            <td>{player.steals}</td>
-            <td>{player.blocks}</td>
-            <td>{player.fieldGoalPercentage}</td>
-            <td>{player.threePointPercentage}</td>
-            <td>{player.freeThrowPercentage}</td>
-            <td>{player.turnovers}</td>
-        </tr>
-    );
-    
-    return (
-        <div id="statTableContainer">
-            <table id="statsTable">
-                <thead>
-                    <tr>
-                    <th>PLAYER</th>
-                    <th>RTG</th>
-                    <th>PPG</th>
-                    <th>REB</th>
-                    <th>STL</th>
-                    <th>BLK</th>
-                    <th>FG%</th>
-                    <th>3PT%</th>
-                    <th>FT%</th>
-                    <th>TO</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {listItems}
-                </tbody>
-            </table>
-        </div>
-    )
+        return (
+                <ReactTable id="react-table" 
+                    columns={columns}
+                    data={players}/>
+        )
+    }
 }
 
 

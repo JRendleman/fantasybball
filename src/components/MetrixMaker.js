@@ -6,25 +6,42 @@ import Filters from "./Filters.js"
 import StatsTable from "./StatsTable.js"
 import Graph from "./Graph.js"
 
-function MetrixMaker() {
-    return (
-        <div  id="metrixMaker">
-            <CreateNewReport />
-            <div id="metrixLeft">
-                <div id="statTitle"><span>Player Value by Rebounds</span></div>
-                <div id="divider"><span>VIEWS</span></div>
-                <StatOptions />
-                <div id="divider"><span>VIEWS</span></div>
-                <GraphOptions />
-                <div id="divider"><span>FILTERS</span></div>
-                <Filters />
+class MetrixMaker extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            filters: null,
+            statOptions: null,
+            graphType: null,
+            playerData: null
+        }
+    }
+    
+    statOptionsCallback = (data) => {
+        this.setState({statOptions: data});
+        console.log(data);
+    }
+
+    render() {
+        return (
+            <div  id="metrixMaker">
+                <CreateNewReport />
+                <div id="metrixLeft">
+                    <div id="statTitle"><span>Player Value by Rebounds</span></div>
+                    <div id="divider"><span>VIEWS</span></div>
+                    <StatOptions statOptionsCallback={this.statOptionsCallback} />
+                    <div id="divider"><span>VIEWS</span></div>
+                    <GraphOptions />
+                    <div id="divider"><span>FILTERS</span></div>
+                    <Filters />
+                </div>
+                <div id="metrixRight">
+                    <StatsTable />
+                    <Graph />
+                </div>
             </div>
-            <div id="metrixRight">
-                <StatsTable />
-                <Graph />
-            </div>
-        </div>
-    )
+        )
+    }
 }
 
 export default MetrixMaker

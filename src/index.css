@@ -140,40 +140,11 @@ body {
     border: 1px solid #346AC0;
 }
 
-#statsTable {
+#react-table {
     width: 100%;
-    margin: 0;
-    font-size: 16px;
-    text-align: center;
-    border-collapse: collapse;
-
 }
 
 #statTableContainer {
     border-radius: 5px;
     border: 1px solid gray;
-}
-
-#statsTable thead tr {
-    height: 20px;
-    background-color: lightgray;
-}
-
-#statsTable tr {
-    height: 30px;
-    border-bottom: 0.1px solid gray;
-}
-
-#statsTable td:nth-child(1) {
-    color: #346AC0;
-    font-weight: bold;
-}
-
-#statsTable tr:nth-child(even) {
-    background-color: lightgray;
-}
-
-#graphPlaceholder {
-    width: 100%;
-    margin-top: 30px;
 }
