@@ -4,7 +4,7 @@ import StatOptions from "./StatOptions.js"
 import GraphOptions from "./GraphOptions.js"
 import Filters from "./Filters.js"
 import StatsTable from "./StatsTable.js"
-import graph from "../images/graphPlaceholder.png"
+import Graph from "./Graph.js"
 
 function MetrixMaker() {
     return (
@@ -21,7 +21,7 @@ function MetrixMaker() {
             </div>
             <div id="metrixRight">
                 <StatsTable />
-                <img id="graphPlaceholder" src={graph} />
+                <Graph />
             </div>
         </div>
     )
