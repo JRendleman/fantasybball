@@ -52,46 +52,56 @@ class StatsTable extends React.Component {
         const columns = [
             {
                 Header: "PLAYER",
-                accessor: "name"
+                accessor: "name",
+                minWidth: 200
             },
             {
                 Header: "PPG",
-                accessor: "ppg"
+                accessor: "ppg",
+                width: 60
             },
             {
                 Header: "REB",
-                accessor: "reb"
+                accessor: "reb",
+                width: 60
             },
             {
                 Header: "STL",
-                accessor: "stl"
+                accessor: "stl",
+                width: 60
             },
             {
                 Header: "BLK",
-                accessor: "blk"
+                accessor: "blk",
+                width: 60
             },
             {
                 Header: "FG%",
-                accessor: "fg"
+                accessor: "fg",
+                width: 60
             },
             {
                 Header: "3PT%",
-                accessor: "tpt"
+                accessor: "tpt",
+                width: 60
             },
             {
                 Header: "FT%",
-                accessor: "ft"
+                accessor: "ft",
+                width: 60
             },
             {
                 Header: "TO",
-                accessor: "to"
+                accessor: "to",
+                width: 60
             }
         ]
         
         return (
                 <ReactTable id="react-table" 
                     columns={columns}
-                    data={this.state.data}/>
+                    data={this.state.data}
+                    defaultPageSize={10}/>
         )
     }
 }

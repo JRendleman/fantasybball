@@ -3,7 +3,7 @@ import Plot from 'react-plotly.js'
 
 class Graph extends React.Component {
     constructor(props) {
-        super();
+        super(props);
         this.graphType = props.graphType;
         this.data = props.data;
     }
