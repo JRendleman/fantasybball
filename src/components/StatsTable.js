@@ -45,6 +45,7 @@ class StatsTable extends React.Component {
                 
     }
             this.setState({data: players});
+            this.props.playerDataCallback(this.state.data);
 }); 
     }
 
