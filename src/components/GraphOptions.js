@@ -40,7 +40,9 @@ export default class GraphOptions extends React.Component {
                                 graphDescription: "Two variables are plotted along two axes, the pattern of the resulting points reveal any correlations and outliers present."});
                 break;
         }
+        this.props.graphOptionsCallback(this.graphStyle);
         this.forceUpdate();
+        
     }
     
     render() {
