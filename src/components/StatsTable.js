@@ -22,7 +22,7 @@ function addPlayerData() {
             turnovers: Math.floor((Math.random() * 4) + 0)
             
         })
-    };
+    }
 }
 
 addPlayerData();

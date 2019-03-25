@@ -19,7 +19,10 @@ class MetrixMaker extends React.Component {
     
     statOptionsCallback = (data) => {
         this.setState({statOptions: data});
-        console.log(data);
+    }
+    
+    graphOptionsCallback = (type) => {
+        this.setState({graphType: type});
     }
 
     render() {
@@ -31,13 +34,13 @@ class MetrixMaker extends React.Component {
                     <div id="divider"><span>VIEWS</span></div>
                     <StatOptions statOptionsCallback={this.statOptionsCallback} />
                     <div id="divider"><span>VIEWS</span></div>
-                    <GraphOptions />
+                    <GraphOptions graphOptionsCallback={this.graphOptionsCallback}/>
                     <div id="divider"><span>FILTERS</span></div>
                     <Filters />
                 </div>
                 <div id="metrixRight">
                     <StatsTable />
-                    <Graph />
+                    <Graph graphType = {this.state.graphType} />
                 </div>
             </div>
         )
