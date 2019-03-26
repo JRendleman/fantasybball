@@ -12,7 +12,9 @@ class Firebase {
             messagingSenderId: '923062709518'
         };
 
-        app.initializeApp(config);
+        if (!app.apps.length) {
+            app.initializeApp(config);
+        }
 
         this.db = app.database();
 
