@@ -26,13 +26,72 @@ function parseStats(currentStat, playerData) {
     }
 }
 
-function parseArray() {
-    
+function getData(props) {
+    switch(props.graphType) {
+            case "barStyle":
+                    return [
+                        {
+                        type: 'bar',
+                        x: props.playerData.map(player => player.name),
+                        y: parseStats(props.statOptions[0], props.playerData)
+                        }
+                    ]
+
+            case "lineStyle":
+                    let traces = [];
+                    let colors = ['red', 'blue', 'purple', 'orange', 'black', 'teal']
+                    for (let i = 0; i < props.statOptions.length; i++) {
+                        traces.push({
+                            x: props.playerData.map(player => player.name),
+                            y: parseStats(props.statOptions[i], props.playerData),
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: props.statOptions[i],
+                            marker: {color: colors[i % 6]},
+                        });
+                    }
+                    
+                    return traces
+            case "scatterStyle":
+                    return [
+                        {
+                        x: parseStats(props.statOptions[0], props.playerData),
+                        y: parseStats(props.statOptions[1], props.playerData),
+                        text: props.playerData.map(player => player.name),
+                        type: 'scatter',
+                        mode: 'markers',
+                        textposition: "top",
+                        marker: {color: 'red'},
+                        }
+                    ]
+            default:
+                return null
+        }
 }
+
+function getAxisNames(props) {
+    let names = [];
+    
+    if (props.statOptions.length == 0) {
+        return names
+    }
+    
+    if (props.statOptions.length < 2) {
+        names.push(props.statOptions[0]);
+        names.push("Player");
+    } else {
+        names.push(props.statOptions[0]);
+        names.push(props.statOptions[1]);
+    }
+    
+    return names;
+}
+
 
 class Graph extends React.Component {
     constructor(props) {
         super(props);
+        
         this.graphType = props.graphType;
         this.data = props.data;
     }
@@ -42,68 +101,43 @@ class Graph extends React.Component {
         if (this.props.statOptions == null || this.props.graphType == null || this.props.playerData == null) {
             return (<div></div>)
         }
-        
-        switch(this.props.graphType) {
-            case "pieStyle":
-                return(
-                    <Plot 
-                        data={[
-                            {
-                            type: 'pie',
-                            values: [19, 26, 55],
-                            labels: ['Residential', 'Non-Residential', 'Utility']
-                            }
-                        ]}
-                    />
-                )
-
-            case "barStyle":
-                return(
-                    <Plot 
-                        data={[
-                            {
-                            type: 'bar',
-                            x: this.props.playerData.map(player => player.name),
-                            y: parseStats(this.props.statOptions[0], this.props.playerData)
-                            }
-                        ]}
-                    />
-                )
-            case "lineStyle":
-                return(
-                    <Plot 
-                        data={[
-                            {
-                            x: parseStats(this.props.statOptions[0], this.props.playerData),
-                            y: parseStats(this.props.statOptions[1], this.props.playerData),
-                            type: 'scatter',
-                            mode: 'lines',
-                            marker: {color: 'red'},
-                            }
-                        ]}
-                    />
-                )
-            case "scatterStyle":
-                return(
-                    <Plot 
-                        data={[
-                            {
-                            x: parseStats(this.props.statOptions[0], this.props.playerData),
-                            y: parseStats(this.props.statOptions[1], this.props.playerData),
-                            text: this.props.playerData.map(player => player.name),
-                            type: 'scatter',
-                            mode: 'markers+text',
-                            textposition: "top",
-                            marker: {color: 'red'},
-                            }
-                        ]}
-                    />
-                )
-            default:
-                return (<div></div>)
+                   
+        let data = getData(this.props);
+        let axesNames = getAxisNames(this.props);
+        if (axesNames.length == 0) {
+            axesNames.push("");
+            axesNames.push("")
         }
+        
+        let x = axesNames[0];
+        let y = axesNames[1];
+        console.log(x);
+        console.log(y);
+            
+        return(
+            <div id="graphDiv">
+            <Plot className="graph"
+                data={data}
+                layout={ {
+                    paper_bgcolor: "#F5F6F7",
+                    plot_bgcolor: "#F5F6F7",
+                    scene: {
+                        xaxis: {
+                            name: {x}
+                        },
+                        yaxis: {
+                            name: {y}
+                        }
+                    } }
+                }
+            />
+            </div>
+        )
+
+            
     
     }
 }
+
 
 export default Graph

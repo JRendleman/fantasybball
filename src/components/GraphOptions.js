@@ -1,6 +1,5 @@
 import React from "react"
 import scatter from "../images/scatter.png"
-import pie from "../images/pie.png"
 import bar from "../images/bar.png"
 import line from "../images/line.png"
 
@@ -23,10 +22,6 @@ export default class GraphOptions extends React.Component {
         let value = e.target.value;
         this.graphStyle = value;
         switch(this.graphStyle) {
-            case "pieStyle":
-                this.setState({ graphTitle: "Pie Chart",
-                                graphDescription: "A chart that uses \"pie slices\" to show relative sizes of data. The chart is divided into sectors, where each sector shows the relative size of each value."});
-                break;
             case "barStyle":
                 this.setState({ graphTitle: "Bar Chart",
                                 graphDescription: "A chart which shows the values of different categories of data as rectangular bars with different lengths."});
@@ -50,7 +45,6 @@ export default class GraphOptions extends React.Component {
             <div id="graphOptions">
             <div id="graphs">
                 <input type="image" src= {scatter} alt = "button" value ="scatterStyle" onClick={this.handleClick.bind(this)} />
-                <input type="image" src= {pie} alt = "button" value ="pieStyle" onClick={this.handleClick.bind(this)} />
                 <input type="image" src= {bar} alt = "button" value ="barStyle" onClick={this.handleClick.bind(this)} />
                 <input type="image" src= {line} alt = "button" value ="lineStyle" onClick={this.handleClick.bind(this)} />
             </div>
