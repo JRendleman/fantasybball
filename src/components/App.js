@@ -10,6 +10,6 @@ function App() {
             <MetrixMaker />
         </div>
     )
-}
+} 
 
 export default App
