@@ -73,3 +73,5 @@ class Filters extends React.Component {
 }
 
 export default Filters
+
+//            <input id="addFilter" type="button" value="Add Filter"/>

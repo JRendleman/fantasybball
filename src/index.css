@@ -148,3 +148,13 @@ body {
     border-radius: 5px;
     border: 1px solid gray;
 }
+
+.graph {
+    width: 90%;
+    margin-left: 5%;
+}
+
+#graphDiv {
+    width: 100%;
+    border: 1px solid gray;
+}

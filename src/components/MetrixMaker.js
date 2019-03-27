@@ -36,7 +36,7 @@ class MetrixMaker extends React.Component {
                 <div id="metrixLeft">
                     <div id="statTitle"><span>Player Value by Rebounds</span></div>
                     <div id="divider"><span>VIEWS</span></div>
-                    <StatOptions statOptionsCallback={this.statOptionsCallback} />
+                    <StatOptions statOptionsCallback={this.statOptionsCallback} graphType={this.state.graphType} />
                     <div id="divider"><span>VIEWS</span></div>
                     <GraphOptions graphOptionsCallback={this.graphOptionsCallback}/>
                     <div id="divider"><span>FILTERS</span></div>
