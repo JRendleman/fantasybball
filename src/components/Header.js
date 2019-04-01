@@ -1,12 +1,39 @@
 import React from "react"
 
-function Header() {
-    return (
-        <div id="headerBar">
-        <h2>BROOKLYN RHINOS</h2>
-        <h2>8-1</h2>
-        </div>
-    )
-}
 
-export default Header
+export default class Header extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            currentPage: "Metric Maker"
+        }
+
+        this.navButtonClicked = this.navButtonClicked.bind(this);
+    }
+
+    navButtonClicked(e) {
+        e.persist();
+        let val = e.target.value;
+
+        if (this.state.currentPage !== val) {
+            this.setState({currentPage: val})
+            this.props.callback(val)
+        }
+    }
+
+    render() {
+        
+
+        return (
+            <div id="headerBar">
+                <h2>{this.state.currentPage}</h2>
+                <div id="navBar">
+                    <input type="button" value="Home" onClick={this.navButtonClicked}/>
+                    <input type="button" value="Metric Maker" onClick={this.navButtonClicked}/>
+                    <input type="button" value="My Team" onClick={this.navButtonClicked}/>
+                </div>
+            </div>
+        )
+    }
+}

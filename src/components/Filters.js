@@ -1,11 +1,7 @@
 import React from "react"
 
 
-class Filters extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-    
+class Filters extends React.Component {    
     render() {
         return(
         <div id="filters">
