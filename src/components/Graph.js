@@ -96,7 +96,6 @@ class Graph extends React.Component {
         this.data = props.data;
     }
     
-    
     render() {
         if (this.props.statOptions == null || this.props.graphType == null || this.props.playerData == null) {
             return (<div></div>)
