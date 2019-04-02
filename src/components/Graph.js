@@ -103,15 +103,13 @@ class Graph extends React.Component {
                    
         let data = getData(this.props);
         let axesNames = getAxisNames(this.props);
-        if (axesNames.length == 0) {
+        if (axesNames.length === 0) {
             axesNames.push("");
             axesNames.push("")
         }
         
         let x = axesNames[0];
         let y = axesNames[1];
-        console.log(x);
-        console.log(y);
             
         return(
             <div id="graphDiv">
