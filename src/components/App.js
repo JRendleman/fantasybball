@@ -23,6 +23,7 @@ class App extends React.Component {
                 return(
                     <div>
                         <Header callback={this.headerCallback}/>
+                        <Draft />
                     </div>
                 )
             case "Metric Maker":

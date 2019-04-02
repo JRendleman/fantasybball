@@ -17,6 +17,13 @@ class MetrixMaker extends React.Component {
         }
     }
     
+
+    playerDataCallback = (data) => {
+        console.log(this.state.playerData);
+        this.setState({playerData: data});
+        console.log(this.state.playerData);
+    }
+   
     statOptionsCallback = (data) => {
         this.setState({statOptions: data});
     }
