@@ -9,14 +9,13 @@ body {
 
 #teamLogo {
     display: inline;
-    width: 50px;
-    height: 30px;
 }
 
 #headerBar {
     height: 45px;
     background-color: #346AC0;
-    padding: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
 }
 
 #headerBar h2{
@@ -158,3 +157,166 @@ body {
     width: 100%;
     border: 1px solid gray;
 }
+
+#draftRoundNumber {
+    display: block;
+    margin-top: 0px;
+    width: 4%;
+    margin: 0;
+}
+
+#draftRoundNumber h4 {
+    color: #346AC0;
+}
+
+#draftOverview {
+    width: 98%;
+    height: 90px;
+    margin-left: 1.5%;
+}
+
+#draftOverviewCell p:nth-child(2), #draftOverviewCell p:nth-child(3) {
+    font-weight: 1000;
+    font-size: 0.9em;
+    margin-top: -10px;
+}
+
+#draftOverviewCell {
+    display: inline-block;
+    height: 100%;
+    width: 12.2%;
+    text-align: center;
+    border: 0.3px solid gray;
+    background-color: white;
+}
+
+.draftPlayerName {
+    color: #346AC0;
+}
+
+#dpd {
+    display: block;
+    width: 90%;
+    height: 270px;
+    background-color: #346AC0;
+    margin-top: 70px;
+    margin-left: 5%;
+    margin-right: 5%;
+    border-radius: 8px;
+}
+
+#dpd-num-pos {
+    vertical-align: top;
+    display: inline-block;
+    height: 100%;
+    width: 10%;
+    text-align: right;
+}
+
+#dpd-num-pos span {
+    color: white;
+    font-size: 25px;
+    width: 100%;
+}
+
+#dpd-num-pos span:nth-child(3) {
+    font-size: 40px;
+} 
+
+#dpd-num-pos div {
+    width: 10%;
+    margin-right: 75%;
+    margin-top: 180px;
+    margin-left: 30%;
+}
+
+#dpd-name-sal-team {
+    display: inline-block;
+    vertical-align: top;
+    color: white;
+    width: 50%;
+    height: 100%;
+    margin-top: 0px;
+}
+
+#dpd-name-sal-team div {
+    display: block;
+    width: 70%;
+    margin-left: 15%;
+    margin-top: 50px;
+}
+
+#dpd-name-sal-team h1 {
+    font-size: 45px;
+    padding: 0px;
+    margin: 0px;
+}
+
+#dpd-name-sal-team span:nth-child(2) {
+    font-size: 25px;
+    margin-right: 10px;
+}
+
+#dpd-name-sal-team span:nth-child(3) {
+    color: lightgray;
+}
+
+#dpd-name-sal-team input {
+    background-color: #D19F38;
+    color: white;
+    width: 35%;
+    border: none;
+    border-radius: 7px;
+    height: 50px;
+    font-size: 20px;
+    margin-top: 30px;
+    padding: 5px;
+}
+
+#dpd-stats {
+    display: inline-block;
+    vertical-align: top;
+    background-color: white;
+    height: 130px;
+    margin-top: 70px;
+    width: 30%;
+    margin-left: 3.5%;
+}
+
+#dpd-stats h4 {
+    font-size: 20px;
+    margin: 0px;
+    padding-top: 7px;
+    text-align: center;
+    color: white;
+    width: 100%;
+    background-color: #24569D;
+    height: 25%;
+}
+
+#dpd-stats div {
+    display: inline-block;
+    margin-top: 20px;
+    height: 41%;
+    width: 19.6%;
+    background-color: white;
+    text-align: center;
+    border-right: 0.5px solid lightgray;
+}
+
+#dpd-stats div p:nth-child(1) {
+    margin: 0px;
+}
+
+#dpd-stats div:nth-child(6) {
+    border: none;
+} 
+
+#dpd-stats div p:nth-child(2) {
+    font-size: 23px;
+    margin: 0px;
+    margin-top: 8px;
+}
+
+
+
