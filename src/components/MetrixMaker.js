@@ -10,19 +10,20 @@ class MetrixMaker extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            filters: null,
+            filter: null,
             statOptions: null,
             graphType: null,
             playerData: null
         }
     }
     
+
     playerDataCallback = (data) => {
         console.log(this.state.playerData);
         this.setState({playerData: data});
         console.log(this.state.playerData);
     }
-    
+   
     statOptionsCallback = (data) => {
         this.setState({statOptions: data});
     }
@@ -31,12 +32,16 @@ class MetrixMaker extends React.Component {
         this.setState({graphType: type});
     }
 
+    filterOptionsCallback = (type) => {
+        this.setState({filter: type});
+    }
+
     render() {
         return (
             <div  id="metrixMaker">
                 <CreateNewReport />
                 <div id="metrixLeft">
-                    <div id="statTitle"><span>Choose Two Stats to Create a New Metric</span></div>
+                    <div id="statTitle"><span>Player Value by Rebounds</span></div>
                     <div id="divider"><span>VIEWS</span></div>
                     <StatOptions statOptionsCallback={this.statOptionsCallback} graphType={this.state.graphType} />
                     <div id="divider"><span>VIEWS</span></div>
@@ -45,8 +50,8 @@ class MetrixMaker extends React.Component {
                     <Filters />
                 </div>
                 <div id="metrixRight">
-                    <StatsTable playerDataCallback={this.playerDataCallback}/>
-                    <Graph graphType={this.state.graphType} playerData={this.state.playerData} statOptions={this.state.statOptions}/>
+                    <StatsTable />
+                    <Graph graphType = {this.state.graphType} />
                 </div>
             </div>
         )

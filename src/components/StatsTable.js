@@ -3,7 +3,7 @@ import ReactTable from "react-table";
 import Firebase from "./firebase"
 import "react-table/react-table.css"
 
-require("firebase");
+require('firebase');
 
 const firebase_client = new Firebase();
 
@@ -45,7 +45,6 @@ class StatsTable extends React.Component {
                 
     }
             this.setState({data: players});
-            this.props.playerDataCallback(this.state.data);
 }); 
     }
 
@@ -106,6 +105,5 @@ class StatsTable extends React.Component {
         )
     }
 }
-
 
 export default StatsTable
