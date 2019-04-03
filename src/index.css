@@ -196,12 +196,12 @@ body {
 
 #dpd {
     display: block;
-    width: 90%;
+    width: 95%;
     height: 270px;
     background-color: #346AC0;
     margin-top: 70px;
-    margin-left: 5%;
-    margin-right: 5%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
     border-radius: 8px;
 }
 
@@ -247,7 +247,7 @@ body {
 }
 
 #dpd-name-sal-team h1 {
-    font-size: 45px;
+    font-size: 30px;
     padding: 0px;
     margin: 0px;
 }
@@ -317,6 +317,13 @@ body {
     margin: 0px;
     margin-top: 8px;
 }
+
+#draft-board {
+    margin-left: 2.5%;
+    margin-top: 50px;
+    width: 47%;
+}
+
 
 
 
