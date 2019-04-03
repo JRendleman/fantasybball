@@ -41,11 +41,10 @@ class StatsTable extends React.Component {
                 });
                     
                 
-        });
-                
+        });        
     }
             this.setState({data: players});
-}); 
+    }); 
     }
 
     render() {
