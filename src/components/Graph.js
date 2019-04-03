@@ -93,7 +93,7 @@ class Graph extends React.Component {
         super(props);
         
         this.graphType = props.graphType;
-        this.data = props.data;
+        this.data = props.playerData;
     }
     
     render() {
