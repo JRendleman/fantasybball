@@ -33,7 +33,17 @@ class Filters extends React.Component {
             returnedQuery = snapshot.key;
             alert(returnedQuery);
         });
+        
     };
+
+    // filter1() {
+    //     //var team = prompt("Order by which team?"); //example input: "LAL" or "GSW"
+
+    //     ref.orderByChild("player_id").on("child_added", function(snapshot) {
+    //         returnedQuery = snapshot.key;
+    //         alert(returnedQuery);
+    //     });
+    // };
 
     filter2() {
         var array = prompt("____ higher than _____? (Format: 'stat', 'number')"); //example input: "ppg, 25" or "stl, 2.1"
