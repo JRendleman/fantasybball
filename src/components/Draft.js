@@ -3,6 +3,8 @@ import DraftOverview from "./DraftOverview.js";
 import DraftPlayerDetail from "./DraftPlayerDetail.js";
 import DraftBoard from "./DraftBoard.js";import Firebase from "./firebase"
 import "react-table/react-table.css"
+import DraftPicksView from "./DraftPicksView.js";
+import Lineup from "./Lineup.js";
 
 require('firebase');
 const firebase_client = new Firebase();
@@ -90,11 +92,24 @@ export default class Draft extends React.Component {
                 player={this.state.selectedPlayer}
                 draftNumber={this.state.pick}
                 />
+
+                
                 <div id="draft-board">
                 <DraftBoard players={this.state.players} 
                 playerSelectedDraftBoard={this.playerSelectedDraftBoard}
                 />
                 </div>
+                <div id="draft-picks-view">
+                <DraftPicksView 
+                pickedPlayers={this.state.draftPicks}
+                />
+                </div>
+                <div id="lineup-view">
+                <Lineup 
+                yourTeam = {[]}
+                />
+                </div>
+
             </div>
         )
     }

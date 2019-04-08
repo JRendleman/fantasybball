@@ -139,10 +139,6 @@ body {
     border: 1px solid #346AC0;
 }
 
-#react-table {
-    width: 100%;
-}
-
 #statTableContainer {
     border-radius: 5px;
     border: 1px solid gray;
@@ -321,7 +317,20 @@ body {
 #draft-board {
     margin-left: 2.5%;
     margin-top: 50px;
-    width: 47%;
+    width: 40%;
+    float: left
+}
+
+#draft-picks-view{
+    margin-left: 2.5%;
+    margin-top: 50px;
+    width: 20%;
+}
+
+#lineup-view{
+    margin-left: 2.5%;
+    margin-top: 50px;
+    width: 20%;
 }
 
 
