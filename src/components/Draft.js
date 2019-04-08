@@ -1,11 +1,11 @@
 import React from "react";
 import DraftOverview from "./DraftOverview.js";
 import DraftPlayerDetail from "./DraftPlayerDetail.js";
-import DraftBoard from "./DraftBoard.js";import Firebase from "./firebase"
+import DraftBoard from "./DraftBoard.js";
+import Firebase from "./firebase"
 import "react-table/react-table.css"
 import DraftPicksView from "./DraftPicksView.js";
 import Lineup from "./Lineup.js";
-import Firebase from "./firebase";
 
 require('firebase');
 const firebase_client = new Firebase();
@@ -128,9 +128,8 @@ export default class Draft extends React.Component {
                         <div>{this.state.retrievedPlayer}</div>
                     </div>
                 </div>
-
             </div>
-
+            </div>
         )
     }
 
@@ -163,6 +162,4 @@ export default class Draft extends React.Component {
     // handleSubmit(event) {
     //     alert('An essay was submitted: ' + this.state.userID);
     //     event.preventDefault();
-    // }
-
-}
+    }
