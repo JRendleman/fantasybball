@@ -42,7 +42,7 @@ export default class Draft extends React.Component {
         this.draftPicks = [];
 
         this.handleChange = this.handleChange.bind(this);
-        this.retrievePlayerByID = this.retrievePlayerByID.bind(this);
+        this.retrievePlayers = this.retrievePlayers.bind(this);
 
         this.state = {
             selectedPlayer: null,
@@ -51,7 +51,8 @@ export default class Draft extends React.Component {
             currentTeamId: 1,
             isUser: false,
             players: [],
-            userID: 'Enter User ID here',
+            stat: '',
+            valueOfStat: 'Enter value of stat here',
             retrievedPlayer: "" //all stats associated with player
         };  
 
@@ -118,9 +119,24 @@ export default class Draft extends React.Component {
                 yourTeam = {[]}
                 />
                 <div className="example">
-                    <form onSubmit={this.retrievePlayerByID}>
+                    <form onSubmit={this.retrievePlayers}>
                         <span></span>
-                        <textarea value={this.state.userID} onChange={this.handleChange} />
+                        <select id='statID' onChange={this.handleChange}>
+                            <option value="ast">Assists</option>
+                            <option value="blk">Blocks</option>
+                            <option value="fg">FG%</option>
+                            <option value="ft">FT%</option>
+                            <option value="name">Name</option>
+                            <option value="player_id">Player ID</option>
+                            <option value="position">Position</option>
+                            <option value="ppg">PPG</option>
+                            <option value="reb">Rebounds</option>
+                            <option value="stl">Steals</option>
+                            <option value="team">Team</option>
+                            <option value="to">Turnovers</option>
+                            <option value="tpt">3PT%</option>
+                        </select>
+                        <textarea id='valueOfStatID' value={this.state.valueOfStat} onChange={this.handleChange} />
                         <input type="submit" value="Retrieve player" />
                     </form>
                     <div className="preview">
@@ -133,33 +149,43 @@ export default class Draft extends React.Component {
         )
     }
 
-    retrievePlayerByID(event) {
+    handleChange(event) {
+        if (event.target.id == 'statID') {
+            this.setState({stat: event.target.value});
+        } else if (event.target.id == 'valueOfStatID') {
+            this.setState({valueOfStat: event.target.value})
+        }
+        console.log("event target value: " + event.target.value);
+        console.log("event target: " + event.target.id);
+    }
+
+    retrievePlayers(event) {
         var childKey, childData, childDataAsString;
-        player_names.orderByChild("player_id").equalTo(parseInt(this.state.userID)).on("child_added", function(snapshot) {
+        var stat = this.state.stat;
+        var valueOfStat = this.state.valueOfStat; //team name position
+
+        //check to see if this stat is an number stat (i.e. NOT any of the string stats) so that it can be parsed
+        if (!(stat.localeCompare('name') == 0 || stat.localeCompare('team') == 0 || stat.localeCompare('position') == 0)) { 
+            valueOfStat = parseFloat(valueOfStat);
+        }
+
+        player_names.orderByChild(stat).equalTo(valueOfStat).on("child_added", function(snapshot) {
             player_names.orderByKey().equalTo(snapshot.key).once('value', function(snapshot) {
-                console.log(snapshot);
                 snapshot.forEach(function(childSnapshot) {
                     childKey = childSnapshot.key;
                     childData = childSnapshot.val();
-                    childDataAsString = JSON.stringify(childData);
-                    console.log(typeof childDataAsString);
+                    // console.log("childSnapshot key: " + childSnapshot.key);
+                    // console.log("childSnapshot value: " + childSnapshot.val());
+                    childDataAsString += JSON.stringify(childData);
                 })
             });
         });
 
         this.setState({retrievedPlayer: childDataAsString});
-
-        //childData.forEach(function())
-        
-        //this.setState({retrievedPlayer: childData});
         event.preventDefault();
-    }
-
-    handleChange(event) {
-        this.setState({userID: event.target.value});
     }
     
     // handleSubmit(event) {
-    //     alert('An essay was submitted: ' + this.state.userID);
+    //     alert('An essay was submitted: ' + this.state.stat);
     //     event.preventDefault();
     }
