@@ -72,9 +72,6 @@ export default class DraftBoard extends React.Component {
                         desc: true,
                     }]}
                     data={this.state.players}
-                    style={{
-                        width: '50%;'
-                    }}
                     getTrProps={(state, rowInfo) => {
                         if (rowInfo && rowInfo.row) {
                           return {
