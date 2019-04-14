@@ -5,9 +5,6 @@ import "react-table/react-table.css"
 export default class DraftPicksView extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            pickedPlayers: props.draftPicks
-        }
     }
 
     render() {
@@ -15,12 +12,12 @@ export default class DraftPicksView extends React.Component {
             {
                 Header: "PICK",
                 accessor: "pick",
-                minWidth: 60
+                width: 60
             },
             {
                 Header: "PLAYER",
-                accessor: "player",
-                width: 175
+                accessor: "name",
+                minWidth: 60
             }
         ]
 
@@ -31,7 +28,7 @@ export default class DraftPicksView extends React.Component {
                         id: "pick",
                         asc: true,
                     }]}
-                    data={this.state.pickedPlayers}
+                    data={this.props.pickedPlayers}
                     defaultPageSize={10}/>
         )
     }

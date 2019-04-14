@@ -315,22 +315,27 @@ body {
 }
 
 #draft-board {
+    vertical-align: top;
+    display: inline-block;
     margin-left: 2.5%;
-    margin-top: 50px;
+    margin-top: 75px;
     width: 40%;
-    float: left
 }
 
 #draft-picks-view{
+    display: inline-block;
+    vertical-align: top;
     margin-left: 2.5%;
-    margin-top: 50px;
-    width: 20%;
+    margin-top: 75px;
+    width: 25%;
 }
 
 #lineup-view{
+    display: inline-block;
+    vertical-align: top;
     margin-left: 2.5%;
-    margin-top: 50px;
-    width: 20%;
+    margin-top: 75px;
+    width: 25%;
 }
 
 

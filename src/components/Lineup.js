@@ -15,12 +15,12 @@ export default class Lineup extends React.Component {
             {
                 Header: "POS",
                 accessor: "pos",
-                minWidth: 60
+                width: 60
             },
             {
                 Header: "PLAYER",
                 accessor: "player",
-                width: 175
+                minWidth: 60
             }
         ]
 

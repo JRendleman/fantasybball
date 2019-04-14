@@ -22,6 +22,10 @@ function getLowestPickNumber(pick) {
     }
 }
 
+function sleep(time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  }
+
 function shuffleArray(array) {
     for (var i = array.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
@@ -47,10 +51,11 @@ export default class Draft extends React.Component {
         this.state = {
             selectedPlayer: null,
             round: 1,
-            pick: 1,
+            pick: 0,
             currentTeamId: 1,
             isUser: false,
             players: [],
+            draftedPlayers: [],
             userID: 'Enter User ID here',
             retrievedPlayer: "" //all stats associated with player
         };  
@@ -65,6 +70,7 @@ export default class Draft extends React.Component {
                 var val = data.val();
                 players.push({
                     name: val.name,
+                    id: val.player_id,
                     ppg: val.ppg,
                     reb: val.reb,
                     ast: val.ast,
@@ -73,19 +79,93 @@ export default class Draft extends React.Component {
                     fg: val.fg,
                     tpt: val.tpt,
                     ft: val.ft,
-                    to: val.to
+                    to: val.to,
+                    team: val.team,
+                    position: val.position
                 });
                     
                 
         });        
     }
-            console.log(players);
             this.setState({players: players});
+            this.advanceDraft(0, players)
         });
     }
 
     playerSelectedDraftBoard = (data) => {
         this.setState({selectedPlayer: data});
+    }
+
+    playerDrafted = (data) => {
+        console.log("HERE")
+
+        let players = this.state.players;
+        let index = players.indexOf(data);
+        players.splice(index, 1);
+        let pickNumber = (this.state.pick + 1) % 11
+        let round = this.state.round
+
+        if (this.state.pick === 11) {
+            round+= 1
+        }
+
+        this.setState({
+            pick: pickNumber,
+            round: round,
+            players: players
+        }, function () {
+            this.advanceDraft(this.state.pick, this.state.players)
+        });
+    }
+
+    advanceRoundAndPick(players) {
+        let pickNumber = (this.state.pick + 1) % 11
+        let round = this.state.round
+
+        if (this.state.pick === 11) {
+            round+= 1
+        }
+
+        this.setState({
+            pick: pickNumber,
+            round: round,
+            players: players
+        }, function () {
+            this.advanceDraft(this.state.pick, this.state.players)
+        });
+    }
+
+    advanceDraft(pick, players) {
+        let isPlayersTurn = this.draftOrder[pick]===0
+
+        console.log("Pick" + pick)
+
+        if (isPlayersTurn) {
+            return
+        } else {
+            let playerToSelect = this.state.players[0]
+            this.state.players.forEach(function(player) {
+                if (player.ppg > playerToSelect.ppg) {
+                    playerToSelect = player;
+                }
+            });
+
+
+            let index = players.indexOf(playerToSelect);
+            players.splice(index, 1);
+
+            // let draftPicks = this.state.draftedPlayers;
+            // draftPicks.push(formattedPick);
+
+            // console.log(formattedPick)
+
+            // this.setState({
+            //     draftPicks: draftPicks
+            // });
+        }
+
+        sleep(10000)
+        this.advanceRoundAndPick(players);
     }
     
     render() {
@@ -100,9 +180,9 @@ export default class Draft extends React.Component {
                 <DraftPlayerDetail 
                 player={this.state.selectedPlayer}
                 draftNumber={this.state.pick}
+                playerDrafted={this.playerDrafted}
+                isPlayersTurn={this.draftOrder[this.state.pick]===0}
                 />
-
-                
                 <div id="draft-board">
                 <DraftBoard players={this.state.players} 
                 playerSelectedDraftBoard={this.playerSelectedDraftBoard}
@@ -110,13 +190,15 @@ export default class Draft extends React.Component {
                 </div>
                 <div id="draft-picks-view">
                 <DraftPicksView 
-                pickedPlayers={this.state.draftPicks}
+                pickedPlayers={this.state.draftedPlayers}
                 />
                 </div>
                 <div id="lineup-view">
-                <Lineup 
-                yourTeam = {[]}
-                />
+                    <Lineup 
+                    yourTeam = {[]}
+                    />
+                </div>
+
                 <div className="example">
                     <form onSubmit={this.retrievePlayerByID}>
                         <span></span>
@@ -128,7 +210,6 @@ export default class Draft extends React.Component {
                         <div>{this.state.retrievedPlayer}</div>
                     </div>
                 </div>
-            </div>
             </div>
         )
     }
