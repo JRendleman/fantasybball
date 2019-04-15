@@ -12,7 +12,7 @@ export default class DraftPicksView extends React.Component {
             {
                 Header: "PICK",
                 accessor: "pick",
-                width: 60
+                width: 80
             },
             {
                 Header: "PLAYER",
@@ -24,12 +24,8 @@ export default class DraftPicksView extends React.Component {
         return(
             <ReactTable id="draft-picks-view" 
                     columns={columns}
-                    defaultSorted={[{
-                        id: "pick",
-                        asc: true,
-                    }]}
                     data={this.props.pickedPlayers}
-                    defaultPageSize={10}/>
+                    defaultPageSize={11}/>
         )
     }
 }
