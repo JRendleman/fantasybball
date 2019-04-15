@@ -24,11 +24,8 @@ export default class DraftPlayerDetail extends React.Component {
     }
 
     playerSelected() {
-        if (this.props.isPlayersTurn) {
-            let player = this.props.player;
-            this.props.playerDrafted(player);
-        }
-
+        let player = this.props.player;
+        this.props.playerDrafted(player);
     }
 
     render() {
