@@ -2,27 +2,49 @@ import React from "react";
 import DraftOverviewCell from "./DraftOverviewCell.js";
 
 export default class DraftOverview extends React.Component {
-    constructor(props) {
-        super(props);
 
-        this.state = {
-            lowestPickToDisplay: props.lowestPick,
-            roundNumber: props.roundNumber
+    getPlayer(index) {
+        let players = this.props.draftedPlayers;
+        let playerCount = players.length - 1;
+        
+        if (playerCount - 7 >= 0) {
+            return players[playerCount - 7 + index];
+        } else if (index < playerCount) {
+            return players[index]
+        } else {
+            return null
         }
+        
     }
 
     render() {
         return (
             <div id="draftOverview">
-                <div id="draftRoundNumber"><h4>{this.state.roundNumber}</h4></div>
-                <DraftOverviewCell pickNumber={this.state.lowestPickToDisplay}/>
-                <DraftOverviewCell pickNumber={this.state.lowestPickToDisplay + 1}/>
-                <DraftOverviewCell pickNumber={this.state.lowestPickToDisplay + 2}/>
-                <DraftOverviewCell pickNumber={this.state.lowestPickToDisplay + 3}/>
-                <DraftOverviewCell pickNumber={this.state.lowestPickToDisplay + 4}/>
-                <DraftOverviewCell pickNumber={this.state.lowestPickToDisplay + 5}/>
-                <DraftOverviewCell pickNumber={this.state.lowestPickToDisplay + 6}/>
-                <DraftOverviewCell pickNumber={this.state.lowestPickToDisplay + 7}/>
+                <div id="draftRoundNumber"><span>Round {this.props.round}</span></div>
+                <DraftOverviewCell 
+                player={this.getPlayer(0)}
+                />
+                <DraftOverviewCell 
+                player={this.getPlayer(1)}
+                />
+                <DraftOverviewCell 
+                player={this.getPlayer(2)}
+                />
+                <DraftOverviewCell 
+                player={this.getPlayer(3)}
+                />
+                <DraftOverviewCell 
+                player={this.getPlayer(4)}
+                />
+                <DraftOverviewCell 
+                player={this.getPlayer(5)}
+                />
+                <DraftOverviewCell 
+                player={this.getPlayer(6)}
+                />
+                <DraftOverviewCell 
+                player={this.getPlayer(7)}
+                />
             </div>
         )
     }

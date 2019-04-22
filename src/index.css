@@ -155,33 +155,38 @@ body {
 }
 
 #draftRoundNumber {
-    display: block;
-    margin-top: 0px;
-    width: 4%;
-    margin: 0;
+    display: inline-block;
+    transform: rotate(-90deg);
+    width: 90px;
+    vertical-align: top;
+    margin-top: 35px;
+    margin-left: 0px;
+    margin-right: 0px;
+    height: 1%;
 }
 
-#draftRoundNumber h4 {
+#draftRoundNumber span {
     color: #346AC0;
 }
 
 #draftOverview {
-    width: 98%;
+    width: 100%;
     height: 90px;
-    margin-left: 1.5%;
+    vertical-align: top;
 }
 
 #draftOverviewCell p:nth-child(2), #draftOverviewCell p:nth-child(3) {
     font-weight: 1000;
-    font-size: 0.9em;
+    font-size: 0.8em;
     margin-top: -10px;
 }
 
 #draftOverviewCell {
     display: inline-block;
     height: 100%;
-    width: 12.2%;
+    width: 11%;
     text-align: center;
+    vertical-align: top;
     border: 0.3px solid gray;
     background-color: white;
 }
@@ -315,22 +320,59 @@ body {
 }
 
 #draft-board {
+    vertical-align: top;
+    display: inline-block;
     margin-left: 2.5%;
-    margin-top: 50px;
+    margin-top: 75px;
     width: 40%;
-    float: left
 }
 
 #draft-picks-view{
+    display: inline-block;
+    vertical-align: top;
     margin-left: 2.5%;
-    margin-top: 50px;
-    width: 20%;
+    margin-top: 75px;
+    width: 25%;
 }
 
 #lineup-view{
+    display: inline-block;
+    vertical-align: top;
     margin-left: 2.5%;
-    margin-top: 50px;
-    width: 20%;
+    margin-top: 75px;
+    width: 25%;
+}
+
+#startDraft {
+    width: 50%;
+    height: 50%;
+    margin-left: 25%;
+    margin-top: 10%;
+    background-color: #24569D;
+    border-radius: 5px;
+    border: 1px solid white;
+}
+
+#startDraft input {
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 10%;
+    font-size: 2em;
+    background-color: white;
+    color: #24569D;
+    border: 1px solid white;
+    border-radius: 5px;
+    display: block;
+}
+
+#startDraft span {
+    display: block;
+    color: white;
+    font-size: 1.5em;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 5%;
+    margin-bottom: 10%;
 }
 
 

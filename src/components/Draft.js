@@ -13,13 +13,8 @@ let player_names = firebase_client.db.ref("players");
 
 var returnedQuery;
 
-// Function the pick number. 8 spots, 11 picks.
-function getLowestPickNumber(pick) {
-    if (pick > 8) {
-        return pick - 8;
-    } else {
-        return pick;
-    }
+const sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
 
 function shuffleArray(array) {
@@ -36,21 +31,23 @@ function shuffleArray(array) {
 export default class Draft extends React.Component {
     constructor(props) {
         super(props);
-
         this.teams = [];
-        this.draftOrder = shuffleArray([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-        this.draftPicks = [];
-
+        this.draftOrder = shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+        this.isPlayersTurn = false;
         this.handleChange = this.handleChange.bind(this);
         this.retrievePlayers = this.retrievePlayers.bind(this);
+        this.startDraft = this.startDraft.bind(this);
 
         this.state = {
+            draftStarted: false,
+            userTeam: [],
             selectedPlayer: null,
             round: 1,
             pick: 1,
             currentTeamId: 1,
-            isUser: false,
             players: [],
+            draftedPlayers: [],
+            userID: 'Enter User ID here',
             stat: '',
             valueOfStat: 'Enter value of stat here',
             retrievedPlayer: "" //all stats associated with player
@@ -66,6 +63,7 @@ export default class Draft extends React.Component {
                 var val = data.val();
                 players.push({
                     name: val.name,
+                    id: val.player_id,
                     ppg: val.ppg,
                     reb: val.reb,
                     ast: val.ast,
@@ -74,13 +72,14 @@ export default class Draft extends React.Component {
                     fg: val.fg,
                     tpt: val.tpt,
                     ft: val.ft,
-                    to: val.to
+                    to: val.to,
+                    team: val.team,
+                    position: val.position
                 });
-                    
-                
         });        
-    }
-            console.log(players);
+    }       players.sort(function(a, b) { 
+            return a.ppg - b.ppg;
+        })
             this.setState({players: players});
         });
     }
@@ -88,65 +87,183 @@ export default class Draft extends React.Component {
     playerSelectedDraftBoard = (data) => {
         this.setState({selectedPlayer: data});
     }
+
+    playerPicked(player, players, pick, round, isUser) {
+        let userTeam = this.state.userTeam
+
+        // Check if the user is picking or not.
+        if (isUser) {
+            userTeam.push(player)
+        }
+
+        // Create draft board player to add to list.
+        let draftBoardPlayer = {
+            name: player.name,
+            pick: pick,
+            id: player.player_id,
+            position: player.position,
+            team: player.team
+        }
+
+        let draftedPlayers = this.state.draftedPlayers
+        draftedPlayers.push(draftBoardPlayer)
+
+        // Remove drafted player from player array.
+        let index = players.indexOf(player);
+        players.splice(index, 1);
+
+        // Increment pick number and round if neccessary.
+        let pickNumber = (this.state.pick + 1)
+        let roundNumber = (this.state.round)
+
+        if ((pickNumber % 12) === 0) {
+            roundNumber += 1
+            this.draftOrder = this.draftOrder.reverse()
+        }
+
+        // Update state.
+        this.setState({
+            pick: pickNumber,
+            round: roundNumber,
+            players: players,
+            userTeam: userTeam,
+            draftedPlayers: draftedPlayers,
+        }, function () {
+            this.advanceDraft(this.state.players, this.state.pick, this.state.round)
+        });
+    }
+
+    // AI drafts player based on below logic.
+    computerDraft(players, pick, round) {
+        let playerToSelect = players[0]
+        let nextHighestPpg = players[0]
+        // Loop through players and select highest ppg.
+        players.forEach(function(player) {
+            if (player.ppg > playerToSelect.ppg) {
+                nextHighestPpg = playerToSelect;
+                playerToSelect = player;
+            }
+        });
+
+        this.setState({
+            selectedPlayer: nextHighestPpg
+        })
+
+        sleep(1000).then(() => {
+            this.playerPicked(playerToSelect, players, pick, round, false)
+        })
+        
+    }
+
+    // Callback from DraftPlayerDetail.js. Draft button does nothing
+    // if it is not user's turn.
+    // Maybe add a prompt/alert to let the user know it's not their
+    // turn.
+    playerDrafted = (data) => {
+        if (this.isPlayersTurn) {
+            this.playerPicked(data, this.state.players, this.state.pick, this.state.round, true)
+        } else {
+            console.log("You're not on the clock.")
+        }
+        
+    } 
+
+    advanceDraft(players, pick, round) {
+        let index = (pick % 11)
+        let isPlayersTurn = this.draftOrder[index] === 1
+
+        this.isPlayersTurn = isPlayersTurn
+
+        if (!isPlayersTurn) {
+            this.computerDraft(players, pick, round)
+        } else {
+            // Possibly show an alert to prompt the user to make a selection. 
+            console.log("It is the user's turn to pick.")
+        }
+    }
     
     render() {
-
-        return(
-            <div>
-                <DraftOverview 
-                lowestPick={getLowestPickNumber(this.state.pick)}
-                roundNumber = {this.state.round}
-                />
-
-                <DraftPlayerDetail 
-                player={this.state.selectedPlayer}
-                draftNumber={this.state.pick}
-                />
-
-                
-                <div id="draft-board">
-                <DraftBoard players={this.state.players} 
-                playerSelectedDraftBoard={this.playerSelectedDraftBoard}
-                />
-                </div>
-                <div id="draft-picks-view">
-                <DraftPicksView 
-                pickedPlayers={this.state.draftPicks}
-                />
-                </div>
-                <div id="lineup-view">
-                <Lineup 
-                yourTeam = {[]}
-                />
-                <div className="example">
-                    <form onSubmit={this.retrievePlayers}>
-                        <span></span>
-                        <select id='statID' onChange={this.handleChange}>
-                            <option value="ast">Assists</option>
-                            <option value="blk">Blocks</option>
-                            <option value="fg">FG%</option>
-                            <option value="ft">FT%</option>
-                            <option value="name">Name</option>
-                            <option value="player_id">Player ID</option>
-                            <option value="position">Position</option>
-                            <option value="ppg">PPG</option>
-                            <option value="reb">Rebounds</option>
-                            <option value="stl">Steals</option>
-                            <option value="team">Team</option>
-                            <option value="to">Turnovers</option>
-                            <option value="tpt">3PT%</option>
-                        </select>
-                        <textarea id='valueOfStatID' value={this.state.valueOfStat} onChange={this.handleChange} />
-                        <input type="submit" value="Retrieve player" />
-                    </form>
-                    <div className="preview">
-                        <h1>Player info:</h1>
-                        <div>{this.state.retrievedPlayer}</div>
+        if (this.state.draftStarted) {
+            return(
+                <div>
+                    <DraftOverview 
+                    draftedPlayers = {this.state.draftedPlayers}
+                    round={this.state.round}
+                    />
+    
+                    <DraftPlayerDetail 
+                    player={this.state.selectedPlayer}
+                    draftNumber={this.state.pick}
+                    playerDrafted={this.playerDrafted}
+                    isPlayersTurn={this.draftOrder[this.state.pick]===0}
+                    />
+    
+                    <div id="draft-board">
+                        <DraftBoard players={this.state.players} 
+                        playerSelectedDraftBoard={this.playerSelectedDraftBoard}
+                        />
+                    </div>
+    
+                    <div id="draft-picks-view">
+                        <DraftPicksView 
+                        pickedPlayers={this.state.draftedPlayers}
+                        />
+                    </div>
+    
+                    <div id="lineup-view">
+                        <Lineup 
+                        userTeam={this.state.userTeam}
+                        />
+                    </div>
+    
+                    <div className="example">
+                        <form onSubmit={this.retrievePlayers}>
+                            <span></span>
+                            <select id='statID' onChange={this.handleChange}>
+                                <option value="ast">Assists</option>
+                                <option value="blk">Blocks</option>
+                                <option value="fg">FG%</option>
+                                <option value="ft">FT%</option>
+                                <option value="name">Name</option>
+                                <option value="player_id">Player ID</option>
+                                <option value="position">Position</option>
+                                <option value="ppg">PPG</option>
+                                <option value="reb">Rebounds</option>
+                                <option value="stl">Steals</option>
+                                <option value="team">Team</option>
+                                <option value="to">Turnovers</option>
+                                <option value="tpt">3PT%</option>
+                            </select>
+                            <textarea id='valueOfStatID' value={this.state.valueOfStat} onChange={this.handleChange} />
+                            <input type="submit" value="Retrieve player" />
+                        </form>
+                        <div className="preview">
+                            <h1>Player info:</h1>
+                            <div>{this.state.retrievedPlayer}</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            </div>
-        )
+            )
+        } else {
+            return(
+                <div id="startDraft">
+                    <input type="button" value="START DRAFT" onClick={this.startDraft}/>
+                    <br/>
+                    <span>The draft order will be a random ordering of the 11 league teams. You will be alerted when it is your turn to pick.</span>
+                </div>
+            )
+        }
+
+        
+    }
+
+    startDraft() {
+        this.setState({
+            draftStarted: true,
+            selectedPlayer: this.state.players[0]
+        })
+
+        this.advanceDraft(this.state.players, 1, 1)
     }
 
     handleChange(event) {
