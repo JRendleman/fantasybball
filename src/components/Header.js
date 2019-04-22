@@ -1,4 +1,5 @@
 import React from "react"
+import "../css/Header.css"
 
 
 export default class Header extends React.Component {
@@ -32,6 +33,7 @@ export default class Header extends React.Component {
                     <input type="button" value="Home" onClick={this.navButtonClicked}/>
                     <input type="button" value="Metric Maker" onClick={this.navButtonClicked}/>
                     <input type="button" value="My Team" onClick={this.navButtonClicked}/>
+                    <input type="button" value="Schedule" onClick={this.navButtonClicked}/>
                 </div>
             </div>
         )

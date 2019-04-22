@@ -3,9 +3,6 @@ import ReactTable from "react-table";
 import "react-table/react-table.css"
 
 export default class DraftPicksView extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         const columns = [

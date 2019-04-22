@@ -1,0 +1,56 @@
+#startDraft {
+    width: 50%;
+    height: 50%;
+    margin-left: 25%;
+    margin-top: 10%;
+    background-color: #24569D;
+    border-radius: 5px;
+    border: 1px solid white;
+}
+
+#startDraft input {
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 10%;
+    font-size: 2em;
+    background-color: white;
+    color: #24569D;
+    border: 1px solid white;
+    border-radius: 5px;
+    display: block;
+}
+
+#startDraft span, #startDraft p {
+    text-align: left;
+    display: block;
+    color: white;
+    font-size: 1.5em;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 5%;
+    margin-bottom: 10%;
+}
+
+#draft-board {
+    vertical-align: top;
+    display: inline-block;
+    margin-left: 2.5%;
+    margin-top: 75px;
+    width: 40%;
+}
+
+#draft-picks-view{
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 2.5%;
+    margin-top: 75px;
+    width: 25%;
+}
+
+#lineup-view{
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 2.5%;
+    margin-top: 75px;
+    width: 25%;
+}

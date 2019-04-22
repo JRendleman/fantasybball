@@ -11,20 +11,6 @@ body {
     display: inline;
 }
 
-#headerBar {
-    height: 45px;
-    background-color: #346AC0;
-    padding-left: 10px;
-    padding-top: 10px;
-}
-
-#headerBar h2{
-    display: inline;
-    color: white;
-    padding-right: 20px;
-    font-size: 20px;
-}
-
 #metrixMaker {
     width: 97%;
     margin-left: 1.5%;
@@ -154,26 +140,7 @@ body {
     border: 1px solid gray;
 }
 
-#draftRoundNumber {
-    display: inline-block;
-    transform: rotate(-90deg);
-    width: 90px;
-    vertical-align: top;
-    margin-top: 35px;
-    margin-left: 0px;
-    margin-right: 0px;
-    height: 1%;
-}
 
-#draftRoundNumber span {
-    color: #346AC0;
-}
-
-#draftOverview {
-    width: 100%;
-    height: 90px;
-    vertical-align: top;
-}
 
 #draftOverviewCell p:nth-child(2), #draftOverviewCell p:nth-child(3) {
     font-weight: 1000;
@@ -195,186 +162,40 @@ body {
     color: #346AC0;
 }
 
-#dpd {
-    display: block;
-    width: 95%;
-    height: 270px;
-    background-color: #346AC0;
-    margin-top: 70px;
-    margin-left: 2.5%;
-    margin-right: 2.5%;
-    border-radius: 8px;
+#modal-wrapper {
+  position: absolute;
+  left: 30%;
+  top: 30%;
+  width: 40%;
+  height: 20%;
+  background-color: #24569D;
+  z-index: 5;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  border: 1px solid white;
+  border-radius: 5px;
 }
 
-#dpd-num-pos {
-    vertical-align: top;
-    display: inline-block;
-    height: 100%;
-    width: 10%;
-    text-align: right;
-}
-
-#dpd-num-pos span {
-    color: white;
+#modal-header {
     font-size: 25px;
-    width: 100%;
+    font-weight: bold;
 }
 
-#dpd-num-pos span:nth-child(3) {
-    font-size: 40px;
-} 
-
-#dpd-num-pos div {
-    width: 10%;
-    margin-right: 75%;
-    margin-top: 180px;
-    margin-left: 30%;
-}
-
-#dpd-name-sal-team {
-    display: inline-block;
-    vertical-align: top;
-    color: white;
-    width: 50%;
-    height: 100%;
-    margin-top: 0px;
-}
-
-#dpd-name-sal-team div {
-    display: block;
-    width: 70%;
-    margin-left: 15%;
-    margin-top: 50px;
-}
-
-#dpd-name-sal-team h1 {
-    font-size: 30px;
-    padding: 0px;
-    margin: 0px;
-}
-
-#dpd-name-sal-team span:nth-child(2) {
-    font-size: 25px;
-    margin-right: 10px;
-}
-
-#dpd-name-sal-team span:nth-child(3) {
-    color: lightgray;
-}
-
-#dpd-name-sal-team input {
-    background-color: #D19F38;
-    color: white;
-    width: 35%;
-    border: none;
-    border-radius: 7px;
-    height: 50px;
-    font-size: 20px;
-    margin-top: 30px;
-    padding: 5px;
-}
-
-#dpd-stats {
-    display: inline-block;
-    vertical-align: top;
-    background-color: white;
-    height: 130px;
-    margin-top: 70px;
-    width: 30%;
-    margin-left: 3.5%;
-}
-
-#dpd-stats h4 {
-    font-size: 20px;
-    margin: 0px;
-    padding-top: 7px;
-    text-align: center;
-    color: white;
-    width: 100%;
-    background-color: #24569D;
-    height: 25%;
-}
-
-#dpd-stats div {
-    display: inline-block;
-    margin-top: 20px;
-    height: 41%;
-    width: 19.6%;
-    background-color: white;
-    text-align: center;
-    border-right: 0.5px solid lightgray;
-}
-
-#dpd-stats div p:nth-child(1) {
-    margin: 0px;
-}
-
-#dpd-stats div:nth-child(6) {
-    border: none;
-} 
-
-#dpd-stats div p:nth-child(2) {
-    font-size: 23px;
-    margin: 0px;
-    margin-top: 8px;
-}
-
-#draft-board {
-    vertical-align: top;
-    display: inline-block;
-    margin-left: 2.5%;
-    margin-top: 75px;
-    width: 40%;
-}
-
-#draft-picks-view{
-    display: inline-block;
-    vertical-align: top;
-    margin-left: 2.5%;
-    margin-top: 75px;
-    width: 25%;
-}
-
-#lineup-view{
-    display: inline-block;
-    vertical-align: top;
-    margin-left: 2.5%;
-    margin-top: 75px;
-    width: 25%;
-}
-
-#startDraft {
-    width: 50%;
-    height: 50%;
-    margin-left: 25%;
-    margin-top: 10%;
-    background-color: #24569D;
+#modal-footer input {
+    height: 30px;
+    width: 200px;
     border-radius: 5px;
-    border: 1px solid white;
-}
-
-#startDraft input {
-    width: 50%;
-    margin-left: 25%;
-    margin-top: 10%;
-    font-size: 2em;
-    background-color: white;
     color: #24569D;
-    border: 1px solid white;
-    border-radius: 5px;
-    display: block;
+    font-size: 20px;
+    margin-top: 10px;
 }
 
-#startDraft span {
-    display: block;
-    color: white;
-    font-size: 1.5em;
-    margin-left: 10%;
-    margin-right: 10%;
-    margin-top: 5%;
-    margin-bottom: 10%;
+#draft-detail-wrapper {
+    width: 50%;
+    margin-left: 25%;
+    text-align: center;
+    font-size: 15px;
 }
-
-
 
 

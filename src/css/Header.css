@@ -1,0 +1,25 @@
+#headerBar {
+    height: 10%;
+    background-color: #346AC0;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+#headerBar h2{
+    display: inline;
+    color: white;
+    padding-right: 20px;
+    font-size: 30px;
+}
+
+#navBar input {
+    height: 30px;
+    width: 15%;
+    margin-right: 10px;
+    border: 1 solid gray;
+    background-color: white;
+    color: #346AC0;
+    font-size: 20px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}

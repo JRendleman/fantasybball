@@ -24,7 +24,7 @@ export default class DraftOverviewCell extends React.Component {
         if (this.props.player === null) {
             return(
                 <div id="draftOverviewCell">
-                    <p>Pick No. {this.pickNumber}</p>
+                
                 </div>
             )
         } else {
