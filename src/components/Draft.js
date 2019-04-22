@@ -155,8 +155,8 @@ export default class Draft extends React.Component {
         } else if (event.target.id == 'valueOfStatID') {
             this.setState({valueOfStat: event.target.value})
         }
-        console.log("event target value: " + event.target.value);
-        console.log("event target: " + event.target.id);
+        // console.log("event target value: " + event.target.value);
+        // console.log("event target: " + event.target.id);
     }
 
     retrievePlayers(event) {

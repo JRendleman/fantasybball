@@ -3,6 +3,7 @@ import ReactTable from "react-table";
 
 class StatsTable extends React.Component {
     render() {
+        console.log(this.props.playerData);
         if (this.props.playerData === null) {
             return <div></div>
         }

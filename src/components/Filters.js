@@ -16,6 +16,8 @@ class Filters extends React.Component {
     constructor(props) {
         super(props);
 
+        console.log("HERE: " + props);
+
         //this.handleClick = this.handleClick.bind(this);
         this.filter1 = this.filter1.bind(this);
         this.filter2 = this.filter2.bind(this);
