@@ -1,5 +1,6 @@
 import React from "react"
 import Firebase from "./firebase"
+//import StatsTable from "./StatsTable"
 
 var admin = require("firebase");
 const firebase_client = new Firebase();
@@ -16,15 +17,14 @@ class Filters extends React.Component {
     constructor(props) {
         super(props);
 
-        console.log("HERE: " + props);
-
         //this.handleClick = this.handleClick.bind(this);
         this.filter1 = this.filter1.bind(this);
         this.filter2 = this.filter2.bind(this);
         this.filter3 = this.filter3.bind(this);
 
         this.state = {
-            filter: ""
+            filter: "",
+            team: ""
         }
     }
 
@@ -75,15 +75,15 @@ class Filters extends React.Component {
     render() {
         return(
         <div id="filters">
-            <input className="filterButtons" type="button" onClick={this.filter1} value="By Team"/>
+            {/* <input className="filterButtons" type="button" onClick={this.filter1} value="By Team"/>
             <input className="filterButtons" type="button" onClick={this.filter2} value="By Stats > X"/>
             <input className="filterButtons" type="button" onClick={this.filter3} value="By Top 5 of Stat"/>
-            <input id="addFilter" type="button" value="Add Filter"/>
+            
+            <StatsTable name="Ryu" age="25" belt="black"/> */}
         </div>    
     )
     }
 }
+//<input id="addFilter" type="button" value="Add Filter"/>
 
 export default Filters
-
-//            <input id="addFilter" type="button" value="Add Filter"/>
