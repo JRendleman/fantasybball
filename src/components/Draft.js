@@ -1,15 +1,19 @@
 import React from "react";
+import "../css/Draft.css"
 import DraftOverview from "./DraftOverview.js";
 import DraftPlayerDetail from "./DraftPlayerDetail.js";
 import DraftBoard from "./DraftBoard.js";
+import Modal from "./Modal.js"
 import Firebase from "./firebase"
 import "react-table/react-table.css"
 import DraftPicksView from "./DraftPicksView.js";
 import Lineup from "./Lineup.js";
+import DraftDetail from "./DraftDetail";
 
 require('firebase');
 const firebase_client = new Firebase();
 let player_names = firebase_client.db.ref("players");
+let team_names = firebase_client.db.ref("teams");
 
 var returnedQuery;
 
@@ -31,9 +35,10 @@ function shuffleArray(array) {
 export default class Draft extends React.Component {
     constructor(props) {
         super(props);
-        this.teams = [];
+        this.teams = {"1": [], "2": [], "3": [], "4": [], "5": [], "6": [], "7": [], "8": [],
+        "9": [], "10": [], "11": []};
+
         this.draftOrder = shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
-        this.isPlayersTurn = false;
         this.handleChange = this.handleChange.bind(this);
         this.retrievePlayers = this.retrievePlayers.bind(this);
         this.startDraft = this.startDraft.bind(this);
@@ -41,16 +46,19 @@ export default class Draft extends React.Component {
         this.state = {
             draftStarted: false,
             userTeam: [],
+            teamData: [],
             selectedPlayer: null,
             round: 1,
             pick: 1,
-            currentTeamId: 1,
+            isPlayersTurn: false,
+            showModal: false,
             players: [],
             draftedPlayers: [],
-            userID: 'Enter User ID here',
-            stat: '',
-            valueOfStat: 'Enter value of stat here',
-            retrievedPlayer: "" //all stats associated with player
+
+            // userID: 'Enter User ID here',
+            // stat: '',
+            // valueOfStat: 'Enter value of stat here',
+            // retrievedPlayer: "" //all stats associated with player
         };  
 
     }
@@ -60,34 +68,57 @@ export default class Draft extends React.Component {
             let players = [];
             if(snapshot.exists()) {
                 snapshot.forEach((data) => {
-                var val = data.val();
-                players.push({
-                    name: val.name,
-                    id: val.player_id,
-                    ppg: val.ppg,
-                    reb: val.reb,
-                    ast: val.ast,
-                    stl: val.stl,
-                    blk: val.blk,
-                    fg: val.fg,
-                    tpt: val.tpt,
-                    ft: val.ft,
-                    to: val.to,
-                    team: val.team,
-                    position: val.position
-                });
-        });        
-    }       players.sort(function(a, b) { 
-            return a.ppg - b.ppg;
-        })
-            this.setState({players: players});
+                    var val = data.val();
+                    players.push({
+                        name: val.name,
+                        id: val.player_id,
+                        ppg: val.ppg,
+                        reb: val.reb,
+                        ast: val.ast,
+                        stl: val.stl,
+                        blk: val.blk,
+                        fg: val.fg,
+                        tpt: val.tpt,
+                        ft: val.ft,
+                        to: val.to,
+                        team: val.team,
+                        position: val.position
+                    });
+                });        
+            }       
+            players.sort(function(a, b) { 
+                return b.ppg - a.ppg;
+            })
+            this.setState({
+                players: players
+            })
         });
+
+        team_names.on('value', (snapshot) => {
+            let teams = [];
+            if(snapshot.exists()) {
+                snapshot.forEach((data) => {
+                    let val = data.val();
+                    teams.push({
+                        abbreviation: val.abbreviation,
+                        name: val.name,
+                        team_id: val.team_id,
+                        total_salary: val.total_salary
+                    })
+                })
+            }
+            this.setState({
+                teamData: teams
+            })
+        })
     }
 
+    // Player selected from draft board.
     playerSelectedDraftBoard = (data) => {
         this.setState({selectedPlayer: data});
     }
 
+    // A player has been drafted from either the user or the AI.
     playerPicked(player, players, pick, round, isUser) {
         let userTeam = this.state.userTeam
 
@@ -95,6 +126,10 @@ export default class Draft extends React.Component {
         if (isUser) {
             userTeam.push(player)
         }
+        
+        let team = this.draftOrder[pick % 11]
+        let teams = this.teams
+        teams[String(team)].push(player)
 
         // Create draft board player to add to list.
         let draftBoardPlayer = {
@@ -115,7 +150,6 @@ export default class Draft extends React.Component {
         // Increment pick number and round if neccessary.
         let pickNumber = (this.state.pick + 1)
         let roundNumber = (this.state.round)
-
         if ((pickNumber % 12) === 0) {
             roundNumber += 1
             this.draftOrder = this.draftOrder.reverse()
@@ -135,16 +169,37 @@ export default class Draft extends React.Component {
 
     // AI drafts player based on below logic.
     computerDraft(players, pick, round) {
-        let playerToSelect = players[0]
-        let nextHighestPpg = players[0]
-        // Loop through players and select highest ppg.
-        players.forEach(function(player) {
-            if (player.ppg > playerToSelect.ppg) {
-                nextHighestPpg = playerToSelect;
-                playerToSelect = player;
-            }
-        });
+        let index = this.draftOrder[pick % 11]
+        let teams = this.teams
+        let team = teams[String(index)]
 
+        // Setup team needs and draft highest PPG of needed positions.
+        let teamNeeds = {
+            "guard": 2,
+            "center": 1,
+            "forward": 2
+        }
+
+        // Update team needs for current AI.
+        team.forEach((player) => {
+            let playerPosition = player.position;
+            teamNeeds[playerPosition] -= 1
+        })
+
+        let playerToSelect = players[0]
+        // This object stores the next highest PPG player so
+        // DraftOverview will have a draftable player.
+        let nextHighestPpg = players[1]
+        // Loop through players and select highest ppg.
+        for (let i = 0; i < players.length; i++) {
+            let player = players[i];
+            if (teams[player.position] > 0) {
+                playerToSelect = player;
+                break
+            }
+        }
+
+        // Update DraftOverview Player object.
         this.setState({
             selectedPlayer: nextHighestPpg
         })
@@ -152,50 +207,96 @@ export default class Draft extends React.Component {
         sleep(1000).then(() => {
             this.playerPicked(playerToSelect, players, pick, round, false)
         })
+
         
     }
 
-    // Callback from DraftPlayerDetail.js. Draft button does nothing
-    // if it is not user's turn.
-    // Maybe add a prompt/alert to let the user know it's not their
-    // turn.
+    // Callback from DraftPlayerDetail.js when a player is drafted.
+    // Draft button does nothing if it is not user's turn.
     playerDrafted = (data) => {
-        if (this.isPlayersTurn) {
+        if (this.state.isPlayersTurn) {
             this.playerPicked(data, this.state.players, this.state.pick, this.state.round, true)
-        } else {
-            console.log("You're not on the clock.")
-        }
-        
+        } 
     } 
 
     advanceDraft(players, pick, round) {
-        let index = (pick % 11)
-        let isPlayersTurn = this.draftOrder[index] === 1
+        if (pick > 69) {
+            this.props.callback(this.state.teamData, this.teams, this.state.userTeam);
+            return
+        }
 
-        this.isPlayersTurn = isPlayersTurn
+        let index = (pick % 11)
+        let isPlayersTurn = this.draftOrder[index] === 11
+
+        // Update whether it is the user's turn or not.
+        this.setState({
+            isPlayersTurn: isPlayersTurn,
+        })
 
         if (!isPlayersTurn) {
             this.computerDraft(players, pick, round)
         } else {
-            // Possibly show an alert to prompt the user to make a selection. 
-            console.log("It is the user's turn to pick.")
+            this.openModalHandler() 
+        }
+    }
+
+    // Modal Functions
+    openModalHandler = () => {this.setState({showModal: true});}
+    closeModalHandler = () => {this.setState({showModal: false});}
+
+    // Used for the DraftDetail screens to get the team name of the current/next drafting team.
+    getTeamName(isNext) {
+        let index = (this.state.pick - isNext) % 11
+        let teamIndex = this.draftOrder[index]
+
+        if (teamIndex === 11) {
+            if (isNext === 1) {return "You"} else{
+                return "You are"}
+        } else {
+            if (isNext === 1) {
+                return this.state.teamData[teamIndex - 1].name
+            } else {
+                return this.state.teamData[teamIndex - 1].name + " is"
+            }
+            
+        }
+    }
+
+    getPlayerName() {
+        if (this.state.draftedPlayers.length === 0) {
+            return null
+        } else {
+            return this.state.draftedPlayers[this.state.draftedPlayers.length - 1].name
         }
     }
     
     render() {
         if (this.state.draftStarted) {
             return(
-                <div>
+                <div onClick={this.closeModalHandler}>
+                    <Modal 
+                    header="You are on the clock."
+                    isShowing={this.state.showModal}
+                    close={this.closeModalHandler}
+                    body={"Make your draft selection. Remember, you need a healthy mix of Centers, Forwards, and Guards."}
+                    />
+
                     <DraftOverview 
                     draftedPlayers = {this.state.draftedPlayers}
                     round={this.state.round}
                     />
-    
+                    <DraftDetail 
+                    team={this.getTeamName(1)}
+                    player={this.getPlayerName()}
+                    pick={this.state.pick - 1}
+                    nextTeam={this.getTeamName(0)}
+                    isStart={this.state.draftedPlayers.length === 0}
+                    />
                     <DraftPlayerDetail 
                     player={this.state.selectedPlayer}
                     draftNumber={this.state.pick}
                     playerDrafted={this.playerDrafted}
-                    isPlayersTurn={this.draftOrder[this.state.pick]===0}
+                    isPlayersTurn={this.draftOrder[this.state.pick]===11}
                     />
     
                     <div id="draft-board">
@@ -207,6 +308,7 @@ export default class Draft extends React.Component {
                     <div id="draft-picks-view">
                         <DraftPicksView 
                         pickedPlayers={this.state.draftedPlayers}
+                        round={this.state.round}
                         />
                     </div>
     
@@ -216,7 +318,7 @@ export default class Draft extends React.Component {
                         />
                     </div>
     
-                    <div className="example">
+                    <div className="example" style={{display: "none"}}>
                         <form onSubmit={this.retrievePlayers}>
                             <span></span>
                             <select id='statID' onChange={this.handleChange}>
@@ -249,7 +351,13 @@ export default class Draft extends React.Component {
                 <div id="startDraft">
                     <input type="button" value="START DRAFT" onClick={this.startDraft}/>
                     <br/>
-                    <span>The draft order will be a random ordering of the 11 league teams. You will be alerted when it is your turn to pick.</span>
+                    <span>The draft order will be a random ordering of the 11 league teams. 
+                    You will be alerted when it is your turn to pick. The draft also operates in a
+                    snake draft format. This simply means that the draft order reverses each round.
+                    For instance, if you have the first pick in the first round, you will have the last
+                    pick in the second round. 
+                    </span>
+                    <p>Good Luck!</p>
                 </div>
             )
         }

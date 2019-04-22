@@ -1,0 +1,123 @@
+#dpd {
+    display: block;
+    width: 95%;
+    height: 270px;
+    background-color: #346AC0;
+    margin-top: 30px;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    border-radius: 8px;
+}
+
+#dpd-num-pos {
+    vertical-align: top;
+    display: inline-block;
+    height: 100%;
+    width: 10%;
+    text-align: right;
+}
+
+#dpd-num-pos span {
+    color: white;
+    font-size: 25px;
+    width: 100%;
+}
+
+#dpd-num-pos span {
+    font-size: 40px;
+} 
+
+#dpd-num-pos div {
+    width: 10%;
+    margin-right: 75%;
+    margin-top: 180px;
+    margin-left: 30%;
+}
+
+#dpd-name-sal-team {
+    display: inline-block;
+    vertical-align: top;
+    color: white;
+    width: 50%;
+    height: 100%;
+    margin-top: 0px;
+}
+
+#dpd-name-sal-team div {
+    display: block;
+    width: 70%;
+    margin-left: 15%;
+    margin-top: 50px;
+}
+
+#dpd-name-sal-team h1 {
+    font-size: 30px;
+    padding: 0px;
+    margin: 0px;
+}
+
+#dpd-name-sal-team span:nth-child(2) {
+    font-size: 25px;
+    margin-right: 10px;
+}
+
+#dpd-name-sal-team span:nth-child(3) {
+    color: lightgray;
+}
+
+#dpd-name-sal-team input {
+    background-color: #D19F38;
+    color: white;
+    width: 35%;
+    border: none;
+    border-radius: 7px;
+    height: 50px;
+    font-size: 20px;
+    margin-top: 30px;
+    padding: 5px;
+}
+
+#dpd-stats {
+    display: inline-block;
+    vertical-align: top;
+    background-color: white;
+    height: 130px;
+    margin-top: 70px;
+    width: 30%;
+    margin-left: 3.5%;
+}
+
+#dpd-stats h4 {
+    font-size: 20px;
+    margin: 0px;
+    padding-top: 7px;
+    text-align: center;
+    color: white;
+    width: 100%;
+    background-color: #24569D;
+    height: 25%;
+}
+
+#dpd-stats div {
+    display: inline-block;
+    margin-top: 20px;
+    height: 41%;
+    width: 19.6%;
+    background-color: white;
+    text-align: center;
+    border-right: 0.5px solid lightgray;
+}
+
+#dpd-stats div p:nth-child(1) {
+    margin: 0px;
+}
+
+#dpd-stats div:nth-child(6) {
+    border: none;
+} 
+
+#dpd-stats div p:nth-child(2) {
+    font-size: 23px;
+    margin: 0px;
+    margin-top: 8px;
+}

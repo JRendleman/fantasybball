@@ -1,4 +1,5 @@
 import React from "react";
+import "../css/DraftPlayerDetail.css"
 
 function getPlayerPostion(pos) {
     switch (pos) {
@@ -40,8 +41,6 @@ export default class DraftPlayerDetail extends React.Component {
             <div id="dpd">
                 <div id="dpd-num-pos">
                     <div>
-                        <span>#{this.state.number}</span>
-                        <br/>
                         <span>{getPlayerPostion(this.props.player.position)}</span>
                     </div>
                 </div>

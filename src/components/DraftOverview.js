@@ -1,14 +1,15 @@
 import React from "react";
 import DraftOverviewCell from "./DraftOverviewCell.js";
+import "../css/DraftOverview.css"
 
 export default class DraftOverview extends React.Component {
 
     getPlayer(index) {
         let players = this.props.draftedPlayers;
-        let playerCount = players.length - 1;
+        let playerCount = players.length;
         
-        if (playerCount - 7 >= 0) {
-            return players[playerCount - 7 + index];
+        if (playerCount - 7 > 0) {
+            return players[playerCount - 8 + index];
         } else if (index < playerCount) {
             return players[index]
         } else {

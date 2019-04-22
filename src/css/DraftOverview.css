@@ -1,0 +1,21 @@
+#draftRoundNumber {
+    display: inline-block;
+    transform: rotate(-90deg);
+    width: 90px;
+    vertical-align: top;
+    margin-top: 35px;
+    margin-left: 0px;
+    margin-right: 0px;
+    height: 1%;
+}
+
+#draftRoundNumber span {
+    color: #346AC0;
+}
+
+#draftOverview {
+    width: 100%;
+    height: 90px;
+    vertical-align: top;
+    margin-top: 10px;
+}
