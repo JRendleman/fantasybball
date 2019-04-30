@@ -4,6 +4,7 @@ import Draft from "./Draft.js";
 import MetrixMaker from "./MetrixMaker.js"
 import Schedule from "./Schedule.js"
 import Game from "./Game.js"
+import MyTeam from "./MyTeam.js";
 
 const schedule = [
     [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, null],
@@ -31,7 +32,6 @@ class App extends React.Component {
             currentPage: "Draft",
             currentWeek: 0,
             teams: [],
-            teamData: [],
             userGame: schedule[10][0]
         }
     }
@@ -185,6 +185,7 @@ class App extends React.Component {
                     return(
                         <div>
                             <Header callback={this.headerCallback}/>
+                            <MyTeam teams={this.state.teams}/>
                         </div>
                     )
             case "Draft":
