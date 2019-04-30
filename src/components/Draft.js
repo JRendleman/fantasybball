@@ -183,7 +183,7 @@ export default class Draft extends React.Component {
         // Update team needs for current AI.
         team.forEach((player) => {
             let playerPosition = player.position;
-            teamNeeds[playerPosition] -= 1
+            teamNeeds[playerPosition] = teamNeeds[playerPosition] - 1
         })
 
         let playerToSelect = players[0]
@@ -204,7 +204,7 @@ export default class Draft extends React.Component {
             selectedPlayer: nextHighestPpg
         })
 
-        sleep(1000).then(() => {
+        sleep(0).then(() => {
             this.playerPicked(playerToSelect, players, pick, round, false)
         })
 
@@ -375,9 +375,9 @@ export default class Draft extends React.Component {
     }
 
     handleChange(event) {
-        if (event.target.id == 'statID') {
+        if (event.target.id === 'statID') {
             this.setState({stat: event.target.value});
-        } else if (event.target.id == 'valueOfStatID') {
+        } else if (event.target.id === 'valueOfStatID') {
             this.setState({valueOfStat: event.target.value})
         }
         // console.log("event target value: " + event.target.value);
@@ -390,7 +390,7 @@ export default class Draft extends React.Component {
         var valueOfStat = this.state.valueOfStat; //team name position
 
         //check to see if this stat is an number stat (i.e. NOT any of the string stats) so that it can be parsed
-        if (!(stat.localeCompare('name') == 0 || stat.localeCompare('team') == 0 || stat.localeCompare('position') == 0)) { 
+        if (!(stat.localeCompare('name') === 0 || stat.localeCompare('team') === 0 || stat.localeCompare('position') === 0)) { 
             valueOfStat = parseFloat(valueOfStat);
         }
 

@@ -8,11 +8,17 @@ export default class ScheduleCell extends React.Component {
     }
 
     getTeam(i) {
-        if (i === 11) {
-            return "You"
-        } else {
-            return this.props.teamData[i - 1].name
-        }
+        let teams = this.props.teamData
+        return teams[i - 1].name
+    }
+
+    getRecord(i) {
+        let teams = this.props.teamData;
+
+        let wins = teams[i- 1].wins
+        let losses = teams[i - 1].losses
+
+        return String(wins) + " - " + String(losses)
     }
 
     handleClick(e) {
@@ -29,12 +35,12 @@ export default class ScheduleCell extends React.Component {
                 <div id="teams">
                     <div id="team1">
                         <span>{this.getTeam(this.props.teamOne)}</span><br/>
-                        <span id="record">0 - 0</span>
+                        <span id="record">{this.getRecord(this.props.teamOne)}</span>
                     </div>
                     <div id="team2">
                         <span>{this.getTeam(this.props.teamTwo)}</span>
                         <br/>
-                        <span id="record">0 - 0 </span>
+                        <span id="record">{this.getRecord(this.props.teamTwo)}</span>
                     </div>
                 </div>
                 <input type="button" value="Play Now" onClick={this.handleClick}/>
@@ -45,12 +51,12 @@ export default class ScheduleCell extends React.Component {
                 <div className="schedule-cell">
                     <div id="team1">
                         <span>{this.getTeam(this.props.teamOne)}</span><br/>
-                        <span id="record">0 - 0</span>
+                        <span id="record">{this.getRecord(this.props.teamOne)}</span>
                     </div>
                     <div id="team2">
                         <span>{this.getTeam(this.props.teamTwo)}</span>
                         <br/>
-                        <span id="record">0 - 0 </span>
+                        <span id="record">{this.getRecord(this.props.teamTwo)}</span>
                     </div>
                 </div>
             )

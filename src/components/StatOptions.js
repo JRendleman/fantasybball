@@ -19,7 +19,7 @@ export default class StatOptions extends React.Component {
             this.stats.splice(index, 1);
             this.forceUpdate();
         } else {
-            if (this.stats.length == 2 && this.props.graphType != "lineStyle") {
+            if (this.stats.length === 2 && this.props.graphType !== "lineStyle") {
                 e.target.checked = false;
             } else {
                 this.stats.push(value);

@@ -1,0 +1,19 @@
+#cpu-players, #user-players {
+    width: 45%;
+    display: inline-block;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    margin-top: 25px;
+}
+
+#start-game > input {
+    width: 25%;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    color: white;
+    background-color: #24569D;
+    margin-left: 37.5%;
+    margin-top: 40px;
+}

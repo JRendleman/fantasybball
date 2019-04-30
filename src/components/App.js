@@ -19,15 +19,20 @@ const schedule = [
     [3, 4, 5, 6, 7, 8, 9, 10, null, 1, 2]
 ]
 
+function getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min) ) + min;
+}
+
 class App extends React.Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            currentPage: "Schedule",
-            records: [],
+            currentPage: "Draft",
+            currentWeek: 0,
             teams: [],
-            teamData: []
+            teamData: [],
+            userGame: schedule[10][0]
         }
     }
     // Callback to Header.js to keep track of what page we're on.
@@ -35,6 +40,7 @@ class App extends React.Component {
         this.setState({currentPage: data});
     }
 
+    // Callback from Draft.js, fires when the draft is completed.
     buildTeams = (teamData, teamPlayers, userTeam) => {
         let teams = [];
         for (let i = 0; i < teamData.length; i++) {
@@ -44,6 +50,8 @@ class App extends React.Component {
 
             let team = {
                 name: teamInfo.name,
+                wins: 0,
+                losses: 0,
                 players: players,
                 schedule: teamSchedule,
                 teamInfo: teamInfo,
@@ -56,21 +64,90 @@ class App extends React.Component {
         let team = {
             name: "You",
             players: userTeam,
+            wins: 0,
+            losses: 0,
             schedule: schedule[10],
             teamInfo: null,
             isUser: true
         }
+
         teams.push(team);
+        
         this.setState({
             currentPage: "Schedule",
             teams: teams
         });
     }
 
-    gameStarted = (opposingTeam) => {
+    simulateCPUGames(teams, cpu) {
+        let teamsAlreadyUpdated = [cpu, 10]
+
+        for (let i = 0; i < 11; i++) {
+            let week = this.state.currentWeek;
+            if (week > 10) {
+                week = week % 11
+            }
+
+            let teamOneIndex = schedule[i][this.state.currentWeek] - 1;
+            if (schedule[i][this.state.currentWeek] === null) { continue; }
+            let teamTwoIndex = schedule[teamOneIndex][this.state.currentWeek] - 1;
+            if (teamTwoIndex === null) { continue; }
+
+            if (teamsAlreadyUpdated.includes(teamOneIndex) || teamsAlreadyUpdated.includes(teamTwoIndex)) {
+                continue
+            }
+
+            let teamOne = teams[teamOneIndex];
+            let teamTwo = teams[teamTwoIndex];
+            let random = getRndInteger(0, 10);
+
+            if (random >= 5) {
+                teamOne.wins += 1;
+                teamTwo.losses += 1;
+            } else {
+                teamTwo.wins += 1;
+                teamOne.losses += 1;
+            }
+
+            teams[teamOneIndex] = teamOne
+            teams[teamTwoIndex] = teamTwo
+            teamsAlreadyUpdated.push(teamOneIndex, teamTwoIndex);
+        }
+        return teams
+    }
+
+    biWeekSim = () => {
+        let currentWeek = this.state.currentWeek + 1;
+        let teams = this.state.teams;
+        
+        teams = this.simulateCPUGames(teams, 10);
 
         this.setState({
+            teams: teams,
+            currentWeek: currentWeek
+        });
+    }
+
+    gameStarted = (opposingTeam) => {
+        this.setState({
             currentPage: "Game"
+        });
+    }
+
+    gameCompleted = (winner, loser) => {
+        let teams = this.state.teams;
+        let currentWeek = this.state.currentWeek + 1
+        teams[winner].wins += 1;
+        teams[loser].losses += 1;
+
+        let cpuAlreadyPlayed = winner === 10 ? loser : winner
+
+        teams = this.simulateCPUGames(teams, cpuAlreadyPlayed)
+
+        this.setState({
+            currentPage: "Schedule",
+            teams: teams,
+            currentWeek: currentWeek
         })
     }
 
@@ -97,7 +174,11 @@ class App extends React.Component {
                         <Header callback={this.headerCallback}/>
                         <Schedule 
                         callback={this.headerCallback}
-                        teams={this.state.teams}/>
+                        teams={this.state.teams}
+                        schedule={schedule}
+                        week={this.state.currentWeek}
+                        biWeekSim={this.biWeekSim}
+                        />
                     </div>
                 )
             case "My Team":
@@ -110,22 +191,23 @@ class App extends React.Component {
                     return (
                         <div>
                             <Draft 
-                            
+                            callback={this.buildTeams}
                             />
                         </div>
                     )
             case "Game":
                     return (
                         <div>
-                            <Game 
+                            <Game
+                            teams={this.state.teams} 
+                            userOpponent={this.state.userGame - 1}
+                            gameEnded={this.gameCompleted}
                             />
                         </div>
                     )
             default:
                 return (
-                    <div>
-
-                    </div> 
+                    <div></div> 
                 )
         }
     }
