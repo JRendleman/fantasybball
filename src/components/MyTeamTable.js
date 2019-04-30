@@ -2,17 +2,17 @@ import React from "react";
 import ReactTable from "react-table";
 import "react-table/react-table.css"
 
-export default class DraftBoard extends React.Component {
+export default class TeamPlayerDetail extends React.Component {
     constructor(props) {
         super(props);
         this.selectedPlayer = {}
         this.state = {
-            players: props.players
+            selected: props.players[0]
         }
     }
 
     playerSelected() {
-        this.props.playerSelectedDraftBoard(this.selectedPlayer);
+        this.props.selectFunction(this.selectedPlayer);
     }
 
     render() {
@@ -70,13 +70,13 @@ export default class DraftBoard extends React.Component {
         ]
         
         return (
-                <ReactTable id="draft-board" 
+                <ReactTable 
                     columns={columns}
                     defaultSorted={[{
                         id: "ppg",
                         desc: true,
                     }]}
-                    data={this.state.players}
+                    data={this.props.players}
                     getTrProps={(state, rowInfo) => {
                         if (rowInfo && rowInfo.row) {
                           return {
@@ -97,7 +97,7 @@ export default class DraftBoard extends React.Component {
                         }
                       }
                     }
-                    defaultPageSize={10}/>
+                    defaultPageSize={11}/>
         )
     }
 }

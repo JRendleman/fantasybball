@@ -17,6 +17,19 @@ let team_names = firebase_client.db.ref("teams");
 
 var returnedQuery;
 
+function getPlayerPostion(pos) {
+    switch (pos) {
+        case "guard":
+            return "G";
+        case "center":
+            return "C";
+        case "forward":
+            return "F";
+        default:
+            return pos;
+    }
+}
+
 const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
@@ -82,7 +95,7 @@ export default class Draft extends React.Component {
                         ft: val.ft,
                         to: val.to,
                         team: val.team,
-                        position: val.position
+                        position: getPlayerPostion(val.position)
                     });
                 });        
             }       

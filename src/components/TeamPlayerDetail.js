@@ -1,19 +1,23 @@
 import React from "react";
-import "../css/DraftPlayerDetail.css"
 
-export default class DraftPlayerDetail extends React.Component {
-    constructor(props) {
-        super(props);
+function getPlayerPostion(pos) {
 
-        this.playerSelected = this.playerSelected.bind(this)
-        this.state = {
-            number: props.draftNumber
-        };
+    switch (pos) {
+        case "guard":
+            return "G";
+        case "center":
+            return "C";
+        case "forward":
+            return "F";
+        default:
+            return pos;
     }
+}
 
-    playerSelected() {
-        let player = this.props.player;
-        this.props.playerDrafted(player);
+export default class TeamPlayerDetail extends React.Component {
+
+    tradePlayer() {
+        this.props.tradeFunction(this.props.player);
     }
 
     render() {
@@ -28,7 +32,7 @@ export default class DraftPlayerDetail extends React.Component {
             <div id="dpd">
                 <div id="dpd-num-pos">
                     <div>
-                        <span>{this.props.player.position}</span>
+                        <span>{getPlayerPostion(this.props.player.position)}</span>
                     </div>
                 </div>
                 <div id="dpd-name-sal-team">
@@ -37,7 +41,7 @@ export default class DraftPlayerDetail extends React.Component {
                         <span>${this.props.player.salary}M</span>
                         <span> {this.props.player.team}</span>
                         <br/>
-                        <input type="button" value="DRAFT" onClick={this.playerSelected.bind(this)}/>
+                        <input type="button" value="TRADE" onClick={this.tradePlayer.bind(this)}/>
                     </div>
                 </div>
                 <div id="dpd-stats">
