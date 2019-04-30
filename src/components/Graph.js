@@ -72,7 +72,7 @@ function getData(props) {
 function getAxisNames(props) {
     let names = [];
     
-    if (props.statOptions.length == 0) {
+    if (props.statOptions.length === 0) {
         return names
     }
     
@@ -97,7 +97,7 @@ class Graph extends React.Component {
     }
     
     render() {
-        if (this.props.statOptions == null || this.props.graphType == null || this.props.playerData == null) {
+        if (this.props.statOptions === null || this.props.graphType === null || this.props.playerData === null) {
             return (<div></div>)
         }
                    
