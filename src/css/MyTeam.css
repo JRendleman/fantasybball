@@ -1,0 +1,13 @@
+#team-player-table {
+    display: inline-block;
+    width: 65%;
+    margin-left: 2.5%;
+    margin-top: 100px;
+    margin-right: 5%;
+}
+
+#team-table {
+    display: inline-block;
+    width: 25%;
+    margin-right: 2.5%;
+}

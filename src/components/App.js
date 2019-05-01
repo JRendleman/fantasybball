@@ -153,14 +153,6 @@ class App extends React.Component {
 
     render() {
         switch(this.state.currentPage) {
-            case "Home":
-                return(
-                    <div>
-                        <Draft 
-                        callback = {this.buildTeams}
-                        />
-                    </div>
-                )
             case "Metric Maker":
                 return (
                     <div>

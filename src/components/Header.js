@@ -30,10 +30,10 @@ export default class Header extends React.Component {
             <div id="headerBar">
                 <h2>{this.state.currentPage}</h2>
                 <div id="navBar">
-                    <input type="button" value="Home" onClick={this.navButtonClicked}/>
-                    <input type="button" value="Metric Maker" onClick={this.navButtonClicked}/>
+                    
                     <input type="button" value="My Team" onClick={this.navButtonClicked}/>
                     <input type="button" value="Schedule" onClick={this.navButtonClicked}/>
+                    <input type="button" value="Metric Maker" onClick={this.navButtonClicked}/>
                 </div>
             </div>
         )
