@@ -6,6 +6,8 @@ export default class GamePlayerTable extends React.Component {
     constructor(props) {
         super(props);
         this.players = props.players;
+        this.state = { selected: {}, selectAll: 0};
+		this.toggleRow = this.toggleRow.bind(this);
     }
 
     fixPositions() {
@@ -28,10 +30,34 @@ export default class GamePlayerTable extends React.Component {
         this.players = players;
     }
 
+    toggleRow(name) {
+		const newSelected = Object.assign({}, this.state.selected);
+		newSelected[name] = !this.state.selected[name];
+		this.setState({
+			selected: newSelected,
+			selectAll: 2
+		});
+	}
+
     render() {
         this.fixPositions()
 
         const columns = [
+            {
+                Header: "SUB",
+                id: "checkbox",
+                accessor: "",
+                Cell: ({ original }) => {
+                    return (
+                        <input
+                            type="checkbox"
+                            className="checkbox"
+                            checked={this.state.selected[original.name] === true}
+                            onChange={() => this.toggleRow(original.name)}
+                        />
+                    );
+                }
+            },
             {
                 Header: "PLAYER",
                 accessor: "name",

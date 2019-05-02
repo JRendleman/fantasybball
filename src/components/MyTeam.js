@@ -1,8 +1,8 @@
 import React from "react";
 import TeamPlayerDetail from "./TeamPlayerDetail.js";
 import MyTeamTable from "./MyTeamTable.js";
-import TeamTable from "./TeamTable.js"
-import "../css/MyTeam.css"
+import TeamTable from "./TeamTable.js";
+import "../css/MyTeam.css";
 
 export default class MyTeam extends React.Component {
     constructor(props) {
@@ -30,9 +30,14 @@ export default class MyTeam extends React.Component {
     }
 
     teamSelected = (team) => {
+        let isUserTeam = false;
+        if (team.name === "You") {
+            isUserTeam = true;
+        }
         this.setState({
+            userPlayer: isUserTeam,
             selectedTeam: team
-        })
+        });
     }
 
     render() {

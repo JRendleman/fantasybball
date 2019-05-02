@@ -5,8 +5,8 @@ import "react-table/react-table.css"
 export default class TeamTable extends React.Component {
     constructor(props) {
         super(props);
-        this.selectedTeam = {}
-        this.teams = props.teams
+        this.selectedTeam = {};
+        this.teams = props.teams;
 
         this.state = {
             selected: props.teams[10]
@@ -23,8 +23,8 @@ export default class TeamTable extends React.Component {
         teams.forEach((team) => {
             let wins = team.wins;
             let losses = team.losses;
-            team.record = String(wins) + " - " + String(losses)
-        })
+            team.record = String(wins) + " - " + String(losses);
+        });
 
         this.teams = teams;
     }
@@ -44,7 +44,7 @@ export default class TeamTable extends React.Component {
             
         ]
         
-        this.addRecordAttribute()
+        this.addRecordAttribute();
 
         return (
                 <ReactTable id="draft-board" 
