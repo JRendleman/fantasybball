@@ -38,15 +38,6 @@ class Filters extends React.Component {
         
     };
 
-    // filter1() {
-    //     //var team = prompt("Order by which team?"); //example input: "LAL" or "GSW"
-
-    //     ref.orderByChild("player_id").on("child_added", function(snapshot) {
-    //         returnedQuery = snapshot.key;
-    //         alert(returnedQuery);
-    //     });
-    // };
-
     filter2() {
         var array = prompt("____ higher than _____? (Format: 'stat', 'number')"); //example input: "ppg, 25" or "stl, 2.1"
         var slicedArray = array.split(",");
@@ -67,23 +58,14 @@ class Filters extends React.Component {
             alert(returnedQuery);
         });
     };
-
-    // handleClick(e) {
-    //     console.log(e);
-    // }
     
     render() {
         return(
         <div id="filters">
-            {/* <input className="filterButtons" type="button" onClick={this.filter1} value="By Team"/>
-            <input className="filterButtons" type="button" onClick={this.filter2} value="By Stats > X"/>
-            <input className="filterButtons" type="button" onClick={this.filter3} value="By Top 5 of Stat"/>
-            
-            <StatsTable name="Ryu" age="25" belt="black"/> */}
+            {}
         </div>    
     )
     }
 }
-//<input id="addFilter" type="button" value="Add Filter"/>
 
 export default Filters
