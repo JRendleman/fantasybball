@@ -84,7 +84,7 @@ class MetrixMaker extends React.Component {
                     graphOptionsCallback={this.graphOptionsCallback}
                     />
 
-                    <div id="divider"><span>FILTERS</span></div>
+                    <div id="divider"><span> </span></div>
 
                     <Filters />
                 </div>
