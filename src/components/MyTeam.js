@@ -2,6 +2,7 @@ import React from "react";
 import TeamPlayerDetail from "./TeamPlayerDetail.js";
 import MyTeamTable from "./MyTeamTable.js";
 import TeamTable from "./TeamTable.js";
+import Trade from "./Trade.js";
 import "../css/MyTeam.css";
 
 export default class MyTeam extends React.Component {
@@ -10,9 +11,11 @@ export default class MyTeam extends React.Component {
 
         this.state = {
             selectedTeam: props.teams[10],
+            teams: props.teams,
             selectedPlayer: props.teams[10].players[0],
             isTrading: false,
-            userPlayer: true
+            userPlayer: true,
+            tradingPlayers: props.teams[10].players,
         }
     }
 
@@ -21,11 +24,36 @@ export default class MyTeam extends React.Component {
     }
 
     playerTraded = (player) => {
-        console.log(player);
+        let teams = this.props.teams;
         let isUserPlayer = this.state.selectedTeam.name === "You"
+
+        let tradingPlayers = [];
+
+        if (!isUserPlayer) {
+            let players = teams[10].players;
+                players.forEach((teamPlayer) => {
+                    if (teamPlayer.position === player.position) {
+                        tradingPlayers.push(teamPlayer);
+                    }
+            })
+        } else {
+
+            teams.forEach((team) => {
+                if (team.name !== this.state.selectedTeam.name) {
+                    let players = team.players;
+                    players.forEach((teamPlayer) => {
+                        if (teamPlayer.position === player.position) {
+                            tradingPlayers.push(teamPlayer);
+                        }
+                    })
+                }
+            });
+        }
+
         this.setState({
             isTrading: true,
-            userPlayer: isUserPlayer
+            userPlayer: isUserPlayer,
+            tradingPlayers: tradingPlayers,
         });
     }
 
@@ -36,7 +64,53 @@ export default class MyTeam extends React.Component {
         }
         this.setState({
             userPlayer: isUserTeam,
-            selectedTeam: team
+            selectedTeam: team,
+            selectedPlayer: team.players[0]
+        });
+    }
+
+    tradeCompleted = (trade) => {
+
+        let userPlayer = trade.userPlayer
+        let cpuPlayer = trade.cpuPlayer
+
+        let newTeams = this.state.teams;
+
+        for (let i = 0; i < newTeams.length; i++) {
+            let team = newTeams[i];
+
+            for (let j = 0; j < team.players.length; j++) {
+                if (team.players[j] === cpuPlayer) {
+                    team.players.splice(j, 1);
+                    team.players.push(userPlayer);
+                    newTeams[i] = team;
+                    break;
+                }
+            }
+        }
+
+        let userTeam = newTeams[10]
+
+        for (let i = 0; i < userTeam.players.length; i++) {
+            if (userTeam.players[i] === userPlayer) {
+                userTeam.players.splice(i, 1);
+                userTeam.players.push(cpuPlayer);
+                newTeams[10] = userTeam;
+                break;
+            }
+        }
+
+        this.setState({
+            isTrading: false,
+            teams: newTeams
+        })
+
+        this.props.trade(newTeams);
+    }
+    
+    closeTradeDiv = () =>  {
+        this.setState({
+            isTrading: false,
         });
     }
 
@@ -54,12 +128,18 @@ export default class MyTeam extends React.Component {
                     />
                 </div>
                 <div id="team-table">
-                    <TeamTable teams={this.props.teams}
+                    <TeamTable teams={this.state.teams}
                     selectFunction={this.teamSelected}
                     />
                 </div>
                 <div id="trade-wrapper" style={{display: this.state.isTrading ? "block" : "none"}}>
-                    
+                    <Trade 
+                    isUserPlayer={this.state.userPlayer}
+                    player={this.state.selectedPlayer}
+                    players={this.state.tradingPlayers}
+                    cancel={this.closeTradeDiv}
+                    tradeCompleted={this.tradeCompleted}
+                    />
                 </div>
             </div>
         )

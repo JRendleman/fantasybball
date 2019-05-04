@@ -9,7 +9,7 @@ function getPlayerPostion(pos) {
         case "forward":
             return "F";
         default:
-            return "ERROR";
+            return pos;
     }
 }
 

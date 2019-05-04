@@ -23,6 +23,9 @@ export default class Schedule extends React.Component {
                 games.push(opposingTeam);
             }
         }
+
+        console.log(games);
+        console.log(this.props.teams);
     
         return games
     }
@@ -40,9 +43,10 @@ export default class Schedule extends React.Component {
     }
 
     render() {
-        const games = this.getGames(this.props.week)
+        let games = this.getGames(this.props.week)
         return(
             <div id="schedule">
+                <h2>Week {this.props.week + 1}</h2>
                 <h2 style={{display: this.userBiWeek()}}>You have no games this week, click the button below.</h2>
                 <input type="button" value="Sim Week" onClick={this.props.biWeekSim} style={{display: this.userBiWeek()}}/>
                 <div id="scheduleGames">

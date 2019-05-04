@@ -32,7 +32,6 @@ class App extends React.Component {
             currentPage: "Draft",
             currentWeek: 0,
             teams: [],
-            userGame: schedule[10][0]
         }
     }
     // Callback to Header.js to keep track of what page we're on.
@@ -74,7 +73,7 @@ class App extends React.Component {
         teams.push(team);
         
         this.setState({
-            currentPage: "Schedule",
+            currentPage: "My Team",
             teams: teams
         });
     }
@@ -114,6 +113,10 @@ class App extends React.Component {
             teamsAlreadyUpdated.push(teamOneIndex, teamTwoIndex);
         }
         return teams
+    }
+
+    tradeFunction = (teams) => {
+        this.setState({teams: teams});
     }
 
     biWeekSim = () => {
@@ -177,7 +180,8 @@ class App extends React.Component {
                     return(
                         <div>
                             <Header callback={this.headerCallback}/>
-                            <MyTeam teams={this.state.teams}/>
+                            <MyTeam teams={this.state.teams}
+                            trade={this.tradeFunction}/>
                         </div>
                     )
             case "Draft":
@@ -193,7 +197,7 @@ class App extends React.Component {
                         <div>
                             <Game
                             teams={this.state.teams} 
-                            userOpponent={this.state.userGame - 1}
+                            userOpponent={schedule[10][this.state.currentWeek % 11] - 1}
                             gameEnded={this.gameCompleted}
                             />
                         </div>

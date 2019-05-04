@@ -3,6 +3,11 @@
 }
 
 #scheduleGames {
-    width: 80%;
+    width: 100%;
     margin-left: 10%;
+}
+
+#schedule > h2{
+    text-align: center;
+    font-size: 2em;
 }

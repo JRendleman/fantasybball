@@ -7,7 +7,7 @@ export default class Header extends React.Component {
         super(props);
 
         this.state = {
-            currentPage: "Metric Maker"
+            currentPage: "My Team"
         }
 
         this.navButtonClicked = this.navButtonClicked.bind(this);

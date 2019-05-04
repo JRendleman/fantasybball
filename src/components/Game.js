@@ -12,10 +12,13 @@ export default class Game extends React.Component {
         super(props)
 
         this.simQuarter = this.simQuarter.bind(this);
+        this.getUserStarters = this.getUserStarters.bind(this);
+
         this.state = {
             quarter: 1,
             userScore: 0,
-            cpuScore: 0, 
+            cpuScore: 0,
+            userStarters: [],
             userCategories: {
                 ppg: 0,
                 reb: 0,
@@ -39,6 +42,41 @@ export default class Game extends React.Component {
                 ft: 0.00,
                 to: 0
             }
+        }
+    }
+
+    subCallback = (subs) => {
+        this.setState({userStarters: subs});
+    }
+
+    getUserStarters() {
+        let starters = this.state.userStarters;
+
+        if (starters.length !== 5) {
+            return false;
+        }
+
+        let teamNeeds = {
+            "G": 2,
+            "F": 2,
+            "C": 1
+        };
+
+        let validStarters = [];
+
+        starters.forEach((player) => {
+            let playerPosition = player.position;
+
+            if (teamNeeds[playerPosition] > 0) {
+                teamNeeds[playerPosition] -= 1;
+                validStarters.push(player);
+            }
+        });
+
+        if (validStarters.length === 5) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -66,6 +104,8 @@ export default class Game extends React.Component {
 
         return players
     }
+
+
 
     calculateScore() {
         let userCats = this.state.userCategories;
@@ -137,16 +177,18 @@ export default class Game extends React.Component {
             return
         }
 
-        let userTeam = this.props.teams[10];
         let oppTeam = this.props.teams[this.props.userOpponent];
+        let userStarters = this.state.userStarters;
+        if (!this.getUserStarters()) {
+            alert("Please choose exactly 5 players with 2 guards, 2 centers, 1 center.");
+            return;
+        };
 
-        let userStarters = this.getStartersForTeam(userTeam)
         let oppStarters = this.getStartersForTeam(oppTeam)
         
         let notStats = ["id", "name", "position", "salary", "team"]
 
         let userCats = this.state.userCategories;
-
         userStarters.forEach((player) => {
             for (const [key, value] of Object.entries(player)) {
                 if (!notStats.includes(key)) {
@@ -210,13 +252,18 @@ export default class Game extends React.Component {
                 cpuScore={this.state.cpuScore}
                 />
                 <div id="user-players">
+                <p>Choose 5 Starters by checking their boxes on the left. Make sure to choose 2 Guards, 2 Forwards, and 1 Center.</p>
                 <GamePlayerTable 
                 players={this.props.teams[10].players}
+                isUser={true}
+                subCallback={this.subCallback}
                 />
                 </div>
                 <div id="cpu-players">
+                <p></p>
                 <GamePlayerTable 
                 players={this.props.teams[this.props.userOpponent].players}
+                isUser={false}
                 />
                 </div>
                 <div id="start-game">

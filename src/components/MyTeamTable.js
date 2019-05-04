@@ -7,12 +7,16 @@ export default class TeamPlayerDetail extends React.Component {
         super(props);
         this.selectedPlayer = {}
         this.state = {
-            selected: props.players[0]
+            selected: 0
         }
     }
 
     playerSelected() {
         this.props.selectFunction(this.selectedPlayer);
+    }
+
+    componentWillMount() {
+        this.setState({selected: 0});
     }
 
     render() {
