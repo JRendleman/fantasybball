@@ -55,6 +55,7 @@ export default class Draft extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.retrievePlayers = this.retrievePlayers.bind(this);
         this.startDraft = this.startDraft.bind(this);
+        this.playerPicked = this.playerPicked.bind(this);
 
         this.state = {
             draftStarted: false,
@@ -188,9 +189,9 @@ export default class Draft extends React.Component {
 
         // Setup team needs and draft highest PPG of needed positions.
         let teamNeeds = {
-            "guard": 2,
-            "center": 1,
-            "forward": 2
+            "G": 2,
+            "C": 1,
+            "F": 2
         }
 
         // Update team needs for current AI.
@@ -217,7 +218,7 @@ export default class Draft extends React.Component {
             selectedPlayer: nextHighestPpg
         })
 
-        sleep(0).then(() => {
+        sleep(100).then(() => {
             this.playerPicked(playerToSelect, players, pick, round, false)
         })
 

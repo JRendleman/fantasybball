@@ -7,7 +7,8 @@ export default class DraftBoard extends React.Component {
         super(props);
         this.selectedPlayer = {}
         this.state = {
-            players: props.players
+            players: props.players,
+            selected: {}
         }
     }
 
@@ -76,7 +77,7 @@ export default class DraftBoard extends React.Component {
                         id: "ppg",
                         desc: true,
                     }]}
-                    data={this.state.players}
+                    data={this.props.players}
                     getTrProps={(state, rowInfo) => {
                         if (rowInfo && rowInfo.row) {
                           return {
@@ -93,11 +94,11 @@ export default class DraftBoard extends React.Component {
                             }
                           }
                         }else{
-                          return {}
+                          return{}
                         }
                       }
                     }
-                    defaultPageSize={10}/>
+                    />
         )
     }
 }
