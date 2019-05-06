@@ -73,4 +73,10 @@
     font-size: 20px;
 }
 
+#my-team-wrapper > h2 {
+    width: 80%;
+    margin-left: 10%;
+    font-size: 2em;
+}
+
 

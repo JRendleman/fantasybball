@@ -54,3 +54,8 @@
     margin-top: 75px;
     width: 25%;
 }
+
+#draft-detail-wrapper > h1, h2 {
+    width: 100%;
+    font-size: 1.2em;
+}

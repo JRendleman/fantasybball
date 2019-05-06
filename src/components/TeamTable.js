@@ -14,6 +14,10 @@ export default class TeamTable extends React.Component {
     }
 
     teamSelected() {
+        if (this.props.isEndOfGame) {
+          return;
+        }
+
         this.props.selectFunction(this.selectedTeam);
     }
 

@@ -117,6 +117,11 @@ export default class MyTeam extends React.Component {
     render() {
         return(
             <div id="my-team-wrapper">
+                <h2 style={{display: this.props.justFinishedDraft ? "block" : "none",
+            textAlign:"center", width: "80%"}}>Congratulations, you've completed the draft.
+             Here's your team page where you can check out your players and make trades. 
+             View your weekly games in the Schedule tab, and make informed decisions with the Metric Maker!
+             </h2>
                 <TeamPlayerDetail 
                 player={this.state.selectedPlayer}
                 tradeFunction={this.playerTraded}
@@ -129,6 +134,7 @@ export default class MyTeam extends React.Component {
                 </div>
                 <div id="team-table">
                     <TeamTable teams={this.state.teams}
+                    isEndOfGame={false}
                     selectFunction={this.teamSelected}
                     />
                 </div>
@@ -136,6 +142,7 @@ export default class MyTeam extends React.Component {
                     <Trade 
                     isUserPlayer={this.state.userPlayer}
                     player={this.state.selectedPlayer}
+                    selectedPlayer={null}
                     players={this.state.tradingPlayers}
                     cancel={this.closeTradeDiv}
                     tradeCompleted={this.tradeCompleted}

@@ -243,15 +243,16 @@ export default class Draft extends React.Component {
         let isPlayersTurn = this.draftOrder[index] === 11
 
         // Update whether it is the user's turn or not.
-        this.setState({
-            isPlayersTurn: isPlayersTurn,
-        })
 
         if (!isPlayersTurn) {
             this.computerDraft(players, pick, round)
         } else {
             this.openModalHandler() 
         }
+
+        this.setState({
+            isPlayersTurn: isPlayersTurn,
+        })
     }
 
     // Modal Functions
@@ -292,7 +293,7 @@ export default class Draft extends React.Component {
                     header="You are on the clock."
                     isShowing={this.state.showModal}
                     close={this.closeModalHandler}
-                    body={"Make your draft selection. Remember, you need a healthy mix of Centers, Forwards, and Guards."}
+                    body={"Make your draft selection. Remember, you need at least 2 Guards, 2 Forwards, and 1 Center."}
                     />
 
                     <DraftOverview 

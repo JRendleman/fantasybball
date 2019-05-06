@@ -5,6 +5,7 @@ import MetrixMaker from "./MetrixMaker.js"
 import Schedule from "./Schedule.js"
 import Game from "./Game.js"
 import MyTeam from "./MyTeam.js";
+import EndGame from "./EndGame.js";
 
 const schedule = [
     [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, null],
@@ -32,11 +33,13 @@ class App extends React.Component {
             currentPage: "Draft",
             currentWeek: 0,
             teams: [],
+            justFinishedDraft: true,
         }
     }
     // Callback to Header.js to keep track of what page we're on.
     headerCallback = (data) => {
-        this.setState({currentPage: data});
+        this.setState({currentPage: data,
+        justFinishedDraft:false});
     }
 
     // Callback from Draft.js, fires when the draft is completed.
@@ -79,7 +82,7 @@ class App extends React.Component {
     }
 
     simulateCPUGames(teams, cpu) {
-        let teamsAlreadyUpdated = [cpu, 10]
+        let teamsAlreadyUpdated = []
 
         for (let i = 0; i < 11; i++) {
             let week = this.state.currentWeek;
@@ -122,7 +125,16 @@ class App extends React.Component {
     biWeekSim = () => {
         let currentWeek = this.state.currentWeek + 1;
         let teams = this.state.teams;
-        
+
+        if (currentWeek > 10) {
+            this.setState({
+                currentPage: "End Game",
+                currentWeek: 0,
+
+            });
+            return
+        }
+
         teams = this.simulateCPUGames(teams, 10);
 
         this.setState({
@@ -146,6 +158,13 @@ class App extends React.Component {
         let cpuAlreadyPlayed = winner === 10 ? loser : winner
 
         teams = this.simulateCPUGames(teams, cpuAlreadyPlayed)
+        if (currentWeek > 10) {
+            this.setState({
+                currentPage: "End Game",
+                currentWeek: 0,
+            });
+            return
+        }
 
         this.setState({
             currentPage: "Schedule",
@@ -154,19 +173,27 @@ class App extends React.Component {
         })
     }
 
+    restartGame = () => {
+        this.setState({
+            currentPage: "Draft"
+        });
+    }
+
     render() {
         switch(this.state.currentPage) {
             case "Metric Maker":
                 return (
                     <div>
-                        <Header callback={this.headerCallback}/>
+                        <Header callback={this.headerCallback}
+                        currentPage={this.state.currentPage}/>
                         <MetrixMaker />
                     </div>
                 )
             case "Schedule":
                 return (
                     <div>
-                        <Header callback={this.headerCallback}/>
+                        <Header callback={this.headerCallback}
+                        currentPage={this.state.currentPage}/>
                         <Schedule 
                         callback={this.headerCallback}
                         teams={this.state.teams}
@@ -179,9 +206,11 @@ class App extends React.Component {
             case "My Team":
                     return(
                         <div>
-                            <Header callback={this.headerCallback}/>
+                            <Header callback={this.headerCallback}
+                            currentPage={this.state.currentPage}/>
                             <MyTeam teams={this.state.teams}
-                            trade={this.tradeFunction}/>
+                            trade={this.tradeFunction}
+                            justFinishedDraft={this.state.justFinishedDraft}/>
                         </div>
                     )
             case "Draft":
@@ -200,6 +229,14 @@ class App extends React.Component {
                             userOpponent={schedule[10][this.state.currentWeek % 11] - 1}
                             gameEnded={this.gameCompleted}
                             />
+                        </div>
+                    )
+
+            case "End Game":
+                    return (
+                        <div>
+                            <EndGame teams={this.state.teams}
+                            restartGame={this.restartGame}/>
                         </div>
                     )
             default:
