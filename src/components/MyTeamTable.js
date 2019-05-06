@@ -37,6 +37,11 @@ export default class TeamPlayerDetail extends React.Component {
                 width: 60
             },
             {
+                Header: "AST",
+                accessor: "ast",
+                width: 60
+            },
+            {
                 Header: "REB",
                 accessor: "reb",
                 width: 60

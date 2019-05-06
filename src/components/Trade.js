@@ -10,7 +10,7 @@ export default class Trade extends React.Component {
         this.tradeLogic = this.tradeLogic.bind(this);
 
         this.state = {
-            selectedPlayer: null
+            selectedPlayer: this.props.selectedPlayer
         }
     }
 

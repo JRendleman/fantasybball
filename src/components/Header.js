@@ -6,10 +6,6 @@ export default class Header extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            currentPage: "My Team"
-        }
-
         this.navButtonClicked = this.navButtonClicked.bind(this);
     }
 
@@ -17,8 +13,7 @@ export default class Header extends React.Component {
         e.persist();
         let val = e.target.value;
 
-        if (this.state.currentPage !== val) {
-            this.setState({currentPage: val})
+        if (this.props.currentPage !== val) {
             this.props.callback(val)
         }
     }
@@ -28,7 +23,7 @@ export default class Header extends React.Component {
 
         return (
             <div id="headerBar">
-                <h2>{this.state.currentPage}</h2>
+                <h2>{this.props.currentPage}</h2>
                 <div id="navBar">
                     
                     <input type="button" value="My Team" onClick={this.navButtonClicked}/>
