@@ -1,6 +1,6 @@
 #team-names {
-    width: 40%;
-    margin-left: 30%;
+    width: 50%;
+    margin-left: 25%;
     margin-top: 5%;
 }
 
@@ -10,7 +10,8 @@
 }
 
 #team-names > div > h2 {
-    display: inline-block;
+    display: inline;
+    font-size: 2em;
 }
 
 #user-team h2:nth-child(2) {
@@ -39,5 +40,6 @@
     width: 70%;
     margin-left: 15%;
     margin-right: 25%;
+    margin-top: 20px;
     text-align: center;
 }

@@ -121,12 +121,12 @@ export default class Game extends React.Component {
                 if (key === "to") {
                     if (value < oppCats[key]) {
                         userScore += 1
-                    } else {
+                    } else if (value > oppCats[key]) {
                         cpuScore += 1
                     }
                 } else if (value > oppCats[key]) {
                     userScore += 1
-                } else {
+                } else if (value < oppCats[key]) {
                     cpuScore += 1
                 }
             }

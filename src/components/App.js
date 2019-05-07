@@ -81,8 +81,8 @@ class App extends React.Component {
         });
     }
 
-    simulateCPUGames(teams, cpu) {
-        let teamsAlreadyUpdated = []
+    simulateCPUGames(teams, cpu, user) {
+        let teamsAlreadyUpdated = [cpu, user]
 
         for (let i = 0; i < 11; i++) {
             let week = this.state.currentWeek;
@@ -122,7 +122,7 @@ class App extends React.Component {
         this.setState({teams: teams});
     }
 
-    biWeekSim = () => {
+    biWeekSim = (isBiWeek) => {
         let currentWeek = this.state.currentWeek + 1;
         let teams = this.state.teams;
 
@@ -135,7 +135,12 @@ class App extends React.Component {
             return
         }
 
-        teams = this.simulateCPUGames(teams, 10);
+        if (isBiWeek) {
+            teams = this.simulateCPUGames(teams, null, null);
+        } else {
+            teams = this.simulateCPUGames(teams, 10, 10);
+        }
+        
 
         this.setState({
             teams: teams,
@@ -157,7 +162,7 @@ class App extends React.Component {
 
         let cpuAlreadyPlayed = winner === 10 ? loser : winner
 
-        teams = this.simulateCPUGames(teams, cpuAlreadyPlayed)
+        teams = this.simulateCPUGames(teams, cpuAlreadyPlayed, 10)
         if (currentWeek > 10) {
             this.setState({
                 currentPage: "End Game",
